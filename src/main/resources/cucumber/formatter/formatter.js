@@ -41,7 +41,8 @@ Cucumber.DOMFormatter = function(rootNode) {
     }
 
     this.step = function(step) {
-        prepareAndPrintCurrentNode(step, {parentNode: scenarioElementsNode, className: 'step', heading: '<h3>'});
+        currentNode = $('#templates .step').clone().appendTo(scenarioElementsNode);
+        printStatement(step);
         currentNode.attr('id', step.id);
         if (hasExamples(step)) {
             printExamples(step.multiline_arg.value, false);
@@ -54,8 +55,8 @@ Cucumber.DOMFormatter = function(rootNode) {
     }
     
     var prepareScenarioElementsNode = function() {
-        scenarioElementsNode = currentNode.find('.childrenElements');
-        scenarioElementsNode.addClass('steps');
+        var childrenElementsNode = currentNode.find('.childrenElements');
+        scenarioElementsNode = $('#templates .steps').clone().appendTo(childrenElementsNode); 
     }
     
     var prepareAndPrintCurrentNode = function(statement, nodeInfo) {
@@ -95,12 +96,18 @@ Cucumber.DOMFormatter = function(rootNode) {
         currentNode.attr('id', Cucumber.encodeId(currentUri, statement.line));
         currentNode.find('.keyword').text(statement.keyword);
         currentNode.find('.name').text(statement.name);
-        if (statement.description !== undefined && $.trim(statement.description) !== '') {
-            currentNode.find('.description').text(statement.description);
+        printDescriptionIfExists(statement);
+        if (heading !== undefined) {
+            currentNode.find('header').wrapInner(heading);
+        }
+    }
+    
+    var printDescriptionIfExists =  function(description) {
+        if (description !== undefined && $.trim(description) !== '') {
+            currentNode.find('.description').text(description);
         } else {
             currentNode.find('.description').remove();
         }
-        currentNode.find('header').wrapInner(heading);
     }
 }
 
