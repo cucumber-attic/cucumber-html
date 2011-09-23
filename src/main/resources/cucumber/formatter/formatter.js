@@ -18,7 +18,7 @@ Cucumber.DOMFormatter = function(rootNode) {
     this.uri = function(uri) {
         currentUri = uri;
     }
-    
+
     this.feature = function(feature) {
         prepareAndPrintCurrentNode(feature, {parentNode: rootNode, className: 'feature', heading: '<h1>'});
         featureElementsNode = currentNode.find('.childrenElements');
@@ -47,27 +47,27 @@ Cucumber.DOMFormatter = function(rootNode) {
             printExamples(step.multiline_arg.value, false);
         }
     }
-    
+
     this.examples = function(examples) {
         prepareAndPrintCurrentNode(examples, {parentNode: featureElementsNode, className: 'exampleBlock', heading: '<h2>'});
         printExamples(examples.rows, true);
     }
-    
+
     var prepareScenarioElementsNode = function() {
         scenarioElementsNode = currentNode.find('.childrenElements');
         scenarioElementsNode.addClass('steps');
     }
-    
+
     var prepareAndPrintCurrentNode = function(statement, nodeInfo) {
         currentNode = $('#templates .blockelement').clone().appendTo(nodeInfo.parentNode);
         currentNode.addClass(nodeInfo.className);
         printStatement(statement, nodeInfo.heading);
     }
-    
+
     var hasExamples = function(step) {
         return step.multiline_arg !== undefined && step.multiline_arg.type === 'table';
     }
-    
+
     var printExamples = function(examples, hasHeader) {
         var table = $('#templates .examples').clone().appendTo(currentNode.find('.childrenElements'));
         $.each(examples, function(index, example) {
@@ -79,7 +79,7 @@ Cucumber.DOMFormatter = function(rootNode) {
             printExampleRow(node, example);
         });
     }
-    
+
     var printExampleRow = function(node, example) {
         var tr = $('<tr>').appendTo(node);
         tr.attr('id', Cucumber.encodeId(currentUri, example.line));
@@ -105,7 +105,7 @@ Cucumber.DOMFormatter = function(rootNode) {
 }
 
 Cucumber.Reporter = function() {
-    var idMatched; 
+    var idMatched;
     this.result = function(result) {
         $('#'+idMatched).addClass(result.status);
         if (result.error_message !== undefined) {
@@ -115,4 +115,8 @@ Cucumber.Reporter = function() {
     this.match = function(match) {
         idMatched = Cucumber.encodeId(match.uri, match.step.line);
     }
+}
+
+if (typeof module !== 'undefined') {
+    module.exports = Cucumber;
 }
