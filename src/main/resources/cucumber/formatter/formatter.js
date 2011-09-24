@@ -72,15 +72,15 @@ Cucumber.DOMFormatter = function(rootNode) {
                 var td = $('<td>' + cell + '</td>').appendTo(tr);
             });
         });
-    }
+    };
 
     this.match = function(match) {
         currentStep = currentSteps.find('li:nth-child(' + currentStepIndex++ + ')');
-    }
+    };
 
     this.result = function(result) {
         currentStep.addClass(result.status);
-    }
+    };
 
     function featureElement(statement, itemtype) {
         var e = blockElement(currentFeature, statement, itemtype);
@@ -103,5 +103,8 @@ Cucumber.DOMFormatter = function(rootNode) {
         e.addClass(itemtype);
         return e;
     }
+};
 
+if (typeof module !== 'undefined') {
+    module.exports = Cucumber;
 }
