@@ -71,6 +71,15 @@
   color: #246ac1;
 }
 
+.cucumber-report .comments {
+  display: inline;
+}
+
+.cucumber-report .comment {
+  margin 0;
+  padding 0;
+}
+
 #cucumber-templates {
   display: none;
 }

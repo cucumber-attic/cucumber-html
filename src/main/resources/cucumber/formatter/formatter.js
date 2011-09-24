@@ -109,7 +109,8 @@ Cucumber.DOMFormatter = function(rootNode) {
     }
 
     function populate(e, statement, itemtype) {
-        tags(e, statement.tags);
+        populateTags(e, statement.tags);
+        populateComments(e, statement.comments);
         e.find('.keyword').text(statement.keyword);
         e.find('.name').text(statement.name);
         e.find('.description').text(statement.description);
@@ -118,7 +119,17 @@ Cucumber.DOMFormatter = function(rootNode) {
         return e;
     }
 
-    function tags(e, tags) {
+    function populateComments(e, comments) {
+        if (comments !== undefined) {
+            var commentsNode = $('#cucumber-templates .comments').clone().prependTo(e.find('.header'));
+            $.each(comments, function(index, comment) {
+                var commentNode = $('#cucumber-templates .comment').clone().appendTo(commentsNode);
+                commentNode.text(comment.value);
+            });
+        }
+    }
+
+    function populateTags(e, tags) {
         if (tags !== undefined) {
             var tagsNode = $('#cucumber-templates .tags').clone().prependTo(e.find('.header'));
             $.each(tags, function(index, tag) {

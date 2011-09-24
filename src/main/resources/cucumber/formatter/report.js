@@ -12,7 +12,15 @@ $(document).ready(function() {
         line:2
     });
 
-    formatter.background({keyword:'Background', name:'Setting up the context', line:3, description: 'These steps will be executed before each scenario.'});
+    formatter.background({
+        comments: [
+          {value: "# Background comment"}
+        ],
+        keyword:'Background', 
+        name:'Setting up the context', 
+        line:3, 
+        description: 'These steps will be executed before each scenario.'
+    });
     formatter.step({keyword:'Given ', name:'I have a background', line:4});
     formatter.step({keyword:'And ', name:'I set some context', line: 5});
     formatter.match({uri:'report.feature'});
