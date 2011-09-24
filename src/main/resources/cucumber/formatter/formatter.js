@@ -60,8 +60,6 @@ Cucumber.DOMFormatter = function(rootNode) {
     
     this.examples = function(examples) {
         var examplesElement = blockElement(currentElement.children('details'), examples, 'examples');
-        examplesElement.addClass('childSection');
-
         var examplesTable = $('#cucumber-templates .examples_table').clone();
         examplesTable.appendTo(examplesElement);
 
@@ -84,7 +82,6 @@ Cucumber.DOMFormatter = function(rootNode) {
 
     function featureElement(statement, itemtype) {
         var e = blockElement(currentFeature.children('details'), statement, itemtype);
-        e.addClass('childSection');
 
         currentSteps = $('#cucumber-templates .steps').clone();
         currentSteps.appendTo(e.children('details'));

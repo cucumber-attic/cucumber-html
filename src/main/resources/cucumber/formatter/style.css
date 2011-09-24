@@ -15,7 +15,7 @@
   margin-bottom: 20px;
 }
 
-.cucumber-report .childSection {
+.cucumber-report details > section {
   margin-left: 20px;
 }
 
