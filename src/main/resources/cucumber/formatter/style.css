@@ -3,7 +3,7 @@
 }
 
 .cucumber-report .keyword {
-  color: #164B2B;
+  font-weight: bold;
 }
 
 .cucumber-report .description {
