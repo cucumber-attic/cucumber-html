@@ -21,9 +21,9 @@ $(document).ready(function() {
     formatter.match({uri:'report.feature'});
     formatter.result({status:'failed', error_message:'something went wrong...', duration: 0});
     formatter.match({uri:'report.feature'});
-    formatter.result({status:'skipped', duration: 0});
+    formatter.result({status:'undefined', duration: 0});
     formatter.match({uri:'report.feature'});
-    formatter.result({status:'passed', duration: 0});
+    formatter.result({status:'skipped', duration: 0});
 
     formatter.scenarioOutline({keyword:'Scenario Outline', name: 'Scenario with examples', description:'It should be good to format outlined arguments.', line: 16});
     formatter.step({keyword:'Given ', name:'I have a <name> which costs <price>', line: 17});
