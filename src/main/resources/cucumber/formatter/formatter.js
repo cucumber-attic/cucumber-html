@@ -61,7 +61,7 @@ Cucumber.DOMFormatter = function(rootNode) {
     this.examples = function(examples) {
         var examplesElement = blockElement(currentElement.children('details'), examples, 'examples');
         var examplesTable = $('#cucumber-templates .examples_table').clone();
-        examplesTable.appendTo(examplesElement);
+        examplesTable.appendTo(examplesElement.children('details'));
 
         $.each(examples.rows, function(index, row) {
             var parent = index == 0 ? examplesTable.find('thead') : examplesTable.find('tbody');
