@@ -95,13 +95,24 @@ Cucumber.DOMFormatter = function(rootNode) {
     function blockElement(parent, statement, itemtype) {
         var e = $('#templates .blockelement').clone();
         e.appendTo(parent);
-        // TODO: comments and tags
+        tags(e, statement.tags);
+        // TODO: comments
         e.find('.keyword').text(statement.keyword);
         e.find('.name').text(statement.name);
         e.find('.description').text(statement.description);
         e.attr('itemtype', 'http://cukes.info/microformat/' + itemtype)
         e.addClass(itemtype);
         return e;
+    }
+
+    function tags(e, tags) {
+        if (tags !== undefined) {
+            var tagsNode = $('#templates .tags').clone().prependTo(e.find('.header'));
+            $.each(tags, function(index, tag) {
+                var tagNode = $('#templates .tag').clone().appendTo(tagsNode);
+                tagNode.text(tag.name);
+            });
+        }
     }
 };
 

@@ -55,3 +55,12 @@ table thead {
 .failed {
   background-color: #D88A8A;
 }
+
+.tags {
+  display: inline;
+}
+
+.tag {
+  margin-right: 0.25em;
+  color: #246ac1;
+}
