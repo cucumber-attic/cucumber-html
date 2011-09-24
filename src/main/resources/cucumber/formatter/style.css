@@ -29,11 +29,15 @@
 
 .cucumber-report table {
   border-collapse: collapse;
-}
-
-.cucumber-report table td {
   border: 1px;
   border-style: solid;
+}
+
+.cucumber-report table td,th {
+  border: 1px;
+  border-style: solid;
+  padding-left: 4px;
+  padding-right: 4px;
 }
 
 .cucumber-report table {
