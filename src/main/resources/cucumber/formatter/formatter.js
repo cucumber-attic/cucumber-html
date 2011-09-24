@@ -1,118 +1,110 @@
 var Cucumber = {};
 
-//See http://www.w3.org/TR/html4/types.html#type-id
-/**
- * Generates an unique id so we can find statements and mark them after execution
- */
-Cucumber.encodeId = function(uri, line) {
-    return 'id_' + uri.replace(/(:|\.|\/)/g,'_') + '_' + line;
-}
-
 Cucumber.DOMFormatter = function(rootNode) {
-    var rootNode = rootNode;
-    var featureElementsNode;
-    var scenarioElementsNode;
-    var currentNode;
     var currentUri;
+    var currentFeature;
+    var currentElement;
+    var currentSteps;
+
+    var currentStepIndex;
+    var currentStep;
 
     this.uri = function(uri) {
         currentUri = uri;
-    }
+    };
     
     this.feature = function(feature) {
-        prepareAndPrintCurrentNode(feature, {parentNode: rootNode, className: 'feature', heading: '<h1>'});
-        featureElementsNode = currentNode.find('.childrenElements');
-        featureElementsNode.addClass('featureElements');
-    }
+        currentFeature = blockElement(rootNode, feature, 'feature');
+    };
 
     this.background = function(background) {
-        prepareAndPrintCurrentNode(background, {parentNode: featureElementsNode, className: 'background', heading: '<h2>'});
-        prepareScenarioElementsNode();
-    }
+        currentElement = featureElement(background, 'background');
+        currentStepIndex = 1;
+    };
 
     this.scenario = function(scenario) {
-        prepareAndPrintCurrentNode(scenario, {parentNode: featureElementsNode, className: 'scenario', heading: '<h2>'});
-        prepareScenarioElementsNode();
-    }
+        currentElement = featureElement(scenario, 'scenario');
+        currentStepIndex = 1;
+    };
 
-    this.scenarioOutline = function(outline) {
-        this.scenario(outline);
-        currentNode.addClass('outline');
-    }
+    this.scenarioOutline = function(scenarioOutline) {
+        currentElement = featureElement(scenarioOutline, 'scenario_outline');
+        currentStepIndex = 1;
+    };
 
     this.step = function(step) {
-        prepareAndPrintCurrentNode(step, {parentNode: scenarioElementsNode, className: 'step', heading: '<h3>'});
-        currentNode.attr('id', step.id);
-        if (hasExamples(step)) {
-            printExamples(step.multiline_arg.value, false);
+        var stepElement = $('#templates .step').clone();
+        stepElement.appendTo(currentSteps);
+        // TODO: comments
+        stepElement.find('.keyword').text(step.keyword);
+        stepElement.find('.name').text(step.name);
+
+        if (step.doc_string) {
+            docString = $('#templates .doc_string').clone();
+            docString.appendTo(stepElement);
+            // TODO: use a syntax highlighter based on the content_type
+            docString.text(step.doc_string.value);
         }
-    }
+        if (step.rows) {
+            dataTable = $('#templates .data_table').clone();
+            dataTable.appendTo(stepElement);
+            var tBody = dataTable.find('tbody');
+            $.each(step.rows, function(index, row) {
+                var tr = $('<tr></tr>').appendTo(tBody);
+                $.each(row.cells, function(index, cell) {
+                    var td = $('<td>' + cell + '</td>').appendTo(tBody);
+                });
+            });
+        }
+    };
     
     this.examples = function(examples) {
-        prepareAndPrintCurrentNode(examples, {parentNode: featureElementsNode, className: 'exampleBlock', heading: '<h2>'});
-        printExamples(examples.rows, true);
-    }
-    
-    var prepareScenarioElementsNode = function() {
-        scenarioElementsNode = currentNode.find('.childrenElements');
-        scenarioElementsNode.addClass('steps');
-    }
-    
-    var prepareAndPrintCurrentNode = function(statement, nodeInfo) {
-        currentNode = $('#templates .blockelement').clone().appendTo(nodeInfo.parentNode);
-        currentNode.addClass(nodeInfo.className);
-        printStatement(statement, nodeInfo.heading);
-    }
-    
-    var hasExamples = function(step) {
-        return step.multiline_arg !== undefined && step.multiline_arg.type === 'table';
-    }
-    
-    var printExamples = function(examples, hasHeader) {
-        var table = $('#templates .examples').clone().appendTo(currentNode.find('.childrenElements'));
-        $.each(examples, function(index, example) {
-            if (index === 0 && hasHeader) {
-                node = table.find('thead');
-            } else {
-                node = table.find('tbody');
-            }
-            printExampleRow(node, example);
-        });
-    }
-    
-    var printExampleRow = function(node, example) {
-        var tr = $('<tr>').appendTo(node);
-        tr.attr('id', Cucumber.encodeId(currentUri, example.line));
-        tr.addClass('exampleRow');
-        $.each(example.cells,function(index, cell) {
-            var td = $('<td>').appendTo(tr);
-            td.addClass('exampleCell');
-            td.text(cell);
-        });
-    }
+        var examplesElement = blockElement(currentElement, examples, 'examples');
+        examplesElement.addClass('childSection');
 
-    var printStatement = function(statement, heading) {
-        currentNode.attr('id', Cucumber.encodeId(currentUri, statement.line));
-        currentNode.find('.keyword').text(statement.keyword);
-        currentNode.find('.name').text(statement.name);
-        if (statement.description !== undefined && $.trim(statement.description) !== '') {
-            currentNode.find('.description').text(statement.description);
-        } else {
-            currentNode.find('.description').remove();
-        }
-        currentNode.find('header').wrapInner(heading);
-    }
-}
+        var examplesTable = $('#templates .examples_table').clone();
+        examplesTable.appendTo(examplesElement);
 
-Cucumber.Reporter = function() {
-    var idMatched; 
-    this.result = function(result) {
-        $('#'+idMatched).addClass(result.status);
-        if (result.error_message !== undefined) {
-            $('<pre>').appendTo($('#'+idMatched)).text(result.error_message);
-        }
-    }
+        $.each(examples.rows, function(index, row) {
+            var parent = index == 0 ? examplesTable.find('thead') : examplesTable.find('tbody');
+            var tr = $('<tr></tr>').appendTo(parent);
+            $.each(row.cells, function(index, cell) {
+                var td = $('<td>' + cell + '</td>').appendTo(tr);
+            });
+        });
+    };
+
     this.match = function(match) {
-        idMatched = Cucumber.encodeId(match.uri, match.step.line);
+        currentStep = currentSteps.find('li:nth-child(' + currentStepIndex++ + ')');
+    };
+
+    this.result = function(result) {
+        currentStep.addClass(result.status);
+    };
+
+    function featureElement(statement, itemtype) {
+        var e = blockElement(currentFeature, statement, itemtype);
+        e.addClass('childSection');
+
+        currentSteps = $('#templates .steps').clone();
+        currentSteps.appendTo(e);
+
+        return e;
     }
+
+    function blockElement(parent, statement, itemtype) {
+        var e = $('#templates .blockelement').clone();
+        e.appendTo(parent);
+        // TODO: comments and tags
+        e.find('.keyword').text(statement.keyword);
+        e.find('.name').text(statement.name);
+        e.find('.description').text(statement.description);
+        e.attr('itemtype', 'http://cukes.info/microformat/' + itemtype)
+        e.addClass(itemtype);
+        return e;
+    }
+};
+
+if (typeof module !== 'undefined') {
+    module.exports = Cucumber;
 }
