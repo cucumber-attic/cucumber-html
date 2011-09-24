@@ -19,8 +19,8 @@
   margin-left: 20px;
 }
 
-.cucumber-report .steps {
-  margin-left: 20px;
+.cucumber-report ol.steps {
+  list-style-type: none;
 }
 
 .cucumber-report table {
