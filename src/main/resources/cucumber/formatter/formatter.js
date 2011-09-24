@@ -73,11 +73,20 @@ Cucumber.DOMFormatter = function(rootNode) {
     };
 
     this.match = function(match) {
-        currentStep = currentSteps.find('li:nth-child(' + currentStepIndex++ + ')');
+        currentStep = currentSteps.find('li:nth-child(' + currentStepIndex + ')');
+        currentStepIndex++;
     };
 
     this.result = function(result) {
         currentStep.addClass(result.status);
+        currentElement.addClass(result.status);
+        var isLastStep = currentSteps.find('li:nth-child(' + currentStepIndex + ')').length == 0;
+        if(isLastStep) {
+            if(currentSteps.find('.failed').length == 0) {
+                // No failed steps. Collapse it.
+                currentElement.find('details').removeAttr('open');
+            }
+        }
     };
 
     this.embedding = function(mimeType, data) {
