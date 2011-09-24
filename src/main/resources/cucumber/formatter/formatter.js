@@ -80,6 +80,12 @@ Cucumber.DOMFormatter = function(rootNode) {
         currentStep.addClass(result.status);
     };
 
+    this.embedding = function(mimeType, data) {
+        if(mimeType.match(/^image\//)) {
+            currentStep.append("<div><img src='" + data + "'></div>");
+        }
+    }
+
     function featureElement(statement, itemtype) {
         var e = blockElement(currentFeature.children('details'), statement, itemtype);
 

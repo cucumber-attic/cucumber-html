@@ -20,6 +20,7 @@ $(document).ready(function() {
     formatter.result({status:'passed', duration: 0});
     formatter.match({uri:'report.feature'});
     formatter.result({status:'failed', error_message:'something went wrong...', duration: 0});
+    formatter.embedding('image/png', 'bubble_256x256.png');
     formatter.match({uri:'report.feature'});
     formatter.result({status:'undefined', duration: 0});
     formatter.match({uri:'report.feature'});
