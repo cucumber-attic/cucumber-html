@@ -59,7 +59,7 @@ Cucumber.DOMFormatter = function(rootNode) {
     };
     
     this.examples = function(examples) {
-        var examplesElement = blockElement(currentElement, examples, 'examples');
+        var examplesElement = blockElement(currentElement.children('details'), examples, 'examples');
         examplesElement.addClass('childSection');
 
         var examplesTable = $('#templates .examples_table').clone();
@@ -83,11 +83,11 @@ Cucumber.DOMFormatter = function(rootNode) {
     };
 
     function featureElement(statement, itemtype) {
-        var e = blockElement(currentFeature, statement, itemtype);
+        var e = blockElement(currentFeature.children('details'), statement, itemtype);
         e.addClass('childSection');
 
         currentSteps = $('#templates .steps').clone();
-        currentSteps.appendTo(e.find('.childrenElements'));
+        currentSteps.appendTo(e.children('details'));
 
         return e;
     }
