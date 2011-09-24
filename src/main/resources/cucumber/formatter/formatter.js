@@ -33,20 +33,20 @@ Cucumber.DOMFormatter = function(rootNode) {
     };
 
     this.step = function(step) {
-        var stepElement = $('#templates .step').clone();
+        var stepElement = $('#cucumber-templates .step').clone();
         stepElement.appendTo(currentSteps);
         // TODO: comments
         stepElement.find('.keyword').text(step.keyword);
         stepElement.find('.name').text(step.name);
 
         if (step.doc_string) {
-            docString = $('#templates .doc_string').clone();
+            docString = $('#cucumber-templates .doc_string').clone();
             docString.appendTo(stepElement);
             // TODO: use a syntax highlighter based on the content_type
             docString.text(step.doc_string.value);
         }
         if (step.rows) {
-            dataTable = $('#templates .data_table').clone();
+            dataTable = $('#cucumber-templates .data_table').clone();
             dataTable.appendTo(stepElement);
             var tBody = dataTable.find('tbody');
             $.each(step.rows, function(index, row) {
@@ -62,7 +62,7 @@ Cucumber.DOMFormatter = function(rootNode) {
         var examplesElement = blockElement(currentElement.children('details'), examples, 'examples');
         examplesElement.addClass('childSection');
 
-        var examplesTable = $('#templates .examples_table').clone();
+        var examplesTable = $('#cucumber-templates .examples_table').clone();
         examplesTable.appendTo(examplesElement);
 
         $.each(examples.rows, function(index, row) {
@@ -86,14 +86,14 @@ Cucumber.DOMFormatter = function(rootNode) {
         var e = blockElement(currentFeature.children('details'), statement, itemtype);
         e.addClass('childSection');
 
-        currentSteps = $('#templates .steps').clone();
+        currentSteps = $('#cucumber-templates .steps').clone();
         currentSteps.appendTo(e.children('details'));
 
         return e;
     }
 
     function blockElement(parent, statement, itemtype) {
-        var e = $('#templates .blockelement').clone();
+        var e = $('#cucumber-templates .blockelement').clone();
         e.appendTo(parent);
         tags(e, statement.tags);
         // TODO: comments
@@ -107,9 +107,9 @@ Cucumber.DOMFormatter = function(rootNode) {
 
     function tags(e, tags) {
         if (tags !== undefined) {
-            var tagsNode = $('#templates .tags').clone().prependTo(e.find('.header'));
+            var tagsNode = $('#cucumber-templates .tags').clone().prependTo(e.find('.header'));
             $.each(tags, function(index, tag) {
-                var tagNode = $('#templates .tag').clone().appendTo(tagsNode);
+                var tagNode = $('#cucumber-templates .tag').clone().appendTo(tagsNode);
                 tagNode.text(tag.name);
             });
         }

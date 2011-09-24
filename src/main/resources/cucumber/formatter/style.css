@@ -1,66 +1,66 @@
-body {
+.cucumber-report .body {
   font-family: Helvetica,Arial,sans-serif;
 }
 
-#templates {
-  display: none;
-}
-
-.keyword {
+.cucumber-report .keyword {
   color: #164B2B;
 }
 
-.description {
+.cucumber-report .description {
   font-style: italic;
   margin-left: 20px;
 }
 
-.blockelement {
+.cucumber-report .blockelement {
   margin-bottom: 20px;
 }
 
-.childSection {
+.cucumber-report .childSection {
   margin-left: 20px;
 }
 
-.steps {
+.cucumber-report .steps {
   margin-left: 20px;
 }
 
-table {
+.cucumber-report table {
   border-collapse: collapse;
 }
 
-table td {
+.cucumber-report table td {
   border: 1px;
   border-style: solid;
 }
 
-table {
+.cucumber-report table {
   margin-left: 20px;
 }
 
-table thead {
+.cucumber-report table thead {
   background-color: #C0C0C0;
 }
 
-.passed {
+.cucumber-report .passed {
   background-color: #C5D88A;
 }
 
-.skipped {
+.cucumber-report .skipped {
   background-color: #EAEC2D;
 }
 
-.failed {
+.cucumber-report .failed {
   background-color: #D88A8A;
 }
 
-.tags {
+.cucumber-report .tags {
   display: inline;
 }
 
-.tag {
+.cucumber-report .tag {
   margin-right: 0.25em;
   color: #246ac1;
+}
+
+#cucumber-templates {
+  display: none;
 }
