@@ -1,6 +1,7 @@
 body {
   font-family: Helvetica,Arial,sans-serif;
 }
+
 #templates {
   display: none;
 }
@@ -18,7 +19,7 @@ body {
   margin-bottom: 20px;
 }
 
-.featureElements {
+.childSection {
   margin-left: 20px;
 }
 
@@ -26,17 +27,21 @@ body {
   margin-left: 20px;
 }
 
-table.examples {
+table {
+  border-collapse: collapse;
+}
+
+table td {
+  border: 1px;
+  border-style: solid;
+}
+
+table {
   margin-left: 20px;
 }
 
-table.examples thead {
+table thead {
   background-color: #C0C0C0;
-}
-
-table.examples td {
-  border: 1px;
-  border-style: solid;
 }
 
 .passed {
