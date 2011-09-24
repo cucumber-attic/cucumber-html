@@ -87,7 +87,7 @@ Cucumber.DOMFormatter = function(rootNode) {
         e.addClass('childSection');
 
         currentSteps = $('#templates .steps').clone();
-        currentSteps.appendTo(e);
+        currentSteps.appendTo(e.find('.childrenElements'));
 
         return e;
     }
