@@ -35,9 +35,7 @@ Cucumber.DOMFormatter = function(rootNode) {
     this.step = function(step) {
         var stepElement = $('#cucumber-templates .step').clone();
         stepElement.appendTo(currentSteps);
-        // TODO: comments
-        stepElement.find('.keyword').text(step.keyword);
-        stepElement.find('.name').text(step.name);
+        populate(stepElement, step, 'step');
 
         if (step.doc_string) {
             docString = $('#cucumber-templates .doc_string').clone();
@@ -107,12 +105,15 @@ Cucumber.DOMFormatter = function(rootNode) {
     function blockElement(parent, statement, itemtype) {
         var e = $('#cucumber-templates .blockelement').clone();
         e.appendTo(parent);
+        return populate(e, statement, itemtype);
+    }
+
+    function populate(e, statement, itemtype) {
         tags(e, statement.tags);
-        // TODO: comments
         e.find('.keyword').text(statement.keyword);
         e.find('.name').text(statement.name);
         e.find('.description').text(statement.description);
-        e.attr('itemtype', 'http://cukes.info/microformat/' + itemtype)
+        e.attr('itemtype', 'http://cukes.info/microformat/' + itemtype);
         e.addClass(itemtype);
         return e;
     }

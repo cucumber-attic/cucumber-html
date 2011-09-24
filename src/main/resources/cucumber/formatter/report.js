@@ -1,7 +1,16 @@
 $(document).ready(function() {
     var formatter = new Cucumber.DOMFormatter($('.cucumber-report'));
     formatter.uri('report.feature');
-    formatter.feature({keyword:'Feature', name:'Generating html report', line:2, description: 'It could be useful to have an html report to facilitate documentation reading.'});
+    formatter.feature({
+        comments: [
+          {value: "# A comment"},
+          {value: "# Another comment"},
+        ],
+        keyword:'Feature', 
+        name:'Generating html report', 
+        description: 'It could be useful to have an html report to facilitate documentation reading.',
+        line:2
+    });
 
     formatter.background({keyword:'Background', name:'Setting up the context', line:3, description: 'These steps will be executed before each scenario.'});
     formatter.step({keyword:'Given ', name:'I have a background', line:4});
