@@ -1,6 +1,6 @@
-var Cucumber = {};
+var CucumberHTML = {};
 
-Cucumber.DOMFormatter = function(rootNode) {
+CucumberHTML.DOMFormatter = function(rootNode) {
     var currentUri;
     var currentFeature;
     var currentElement;
@@ -12,7 +12,7 @@ Cucumber.DOMFormatter = function(rootNode) {
     this.uri = function(uri) {
         currentUri = uri;
     };
-    
+
     this.feature = function(feature) {
         currentFeature = blockElement(rootNode, feature, 'feature');
     };
@@ -55,7 +55,7 @@ Cucumber.DOMFormatter = function(rootNode) {
             });
         }
     };
-    
+
     this.examples = function(examples) {
         var examplesElement = blockElement(currentElement.children('details'), examples, 'examples');
         var examplesTable = $('#cucumber-templates .examples_table').clone();
@@ -141,5 +141,5 @@ Cucumber.DOMFormatter = function(rootNode) {
 };
 
 if (typeof module !== 'undefined') {
-    module.exports = Cucumber;
+    module.exports = CucumberHTML;
 }
