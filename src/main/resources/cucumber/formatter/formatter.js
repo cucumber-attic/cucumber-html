@@ -8,6 +8,7 @@ CucumberHTML.DOMFormatter = function(rootNode) {
 
   var currentStepIndex;
   var currentStep;
+  var $templates = $(CucumberHTML.templates);
 
   this.uri = function(uri) {
     currentUri = uri;
@@ -33,18 +34,18 @@ CucumberHTML.DOMFormatter = function(rootNode) {
   };
 
   this.step = function(step) {
-    var stepElement = $('#cucumber-templates .step').clone();
+    var stepElement = $('.step', $templates).clone();
     stepElement.appendTo(currentSteps);
     populate(stepElement, step, 'step');
 
     if (step.doc_string) {
-      docString = $('#cucumber-templates .doc_string').clone();
+      docString = $('.doc_string', $templates).clone();
       docString.appendTo(stepElement);
       // TODO: use a syntax highlighter based on the content_type
       docString.text(step.doc_string.value);
     }
     if (step.rows) {
-      dataTable = $('#cucumber-templates .data_table').clone();
+      dataTable = $('.data_table', $templates).clone();
       dataTable.appendTo(stepElement);
       var tBody = dataTable.find('tbody');
       $.each(step.rows, function(index, row) {
@@ -58,7 +59,7 @@ CucumberHTML.DOMFormatter = function(rootNode) {
 
   this.examples = function(examples) {
     var examplesElement = blockElement(currentElement.children('details'), examples, 'examples');
-    var examplesTable = $('#cucumber-templates .examples_table').clone();
+    var examplesTable = $('.examples_table', $templates).clone();
     examplesTable.appendTo(examplesElement.children('details'));
 
     $.each(examples.rows, function(index, row) {
@@ -96,14 +97,14 @@ CucumberHTML.DOMFormatter = function(rootNode) {
   function featureElement(statement, itemtype) {
     var e = blockElement(currentFeature.children('details'), statement, itemtype);
 
-    currentSteps = $('#cucumber-templates .steps').clone();
+    currentSteps = $('.steps', $templates).clone();
     currentSteps.appendTo(e.children('details'));
 
     return e;
   }
 
   function blockElement(parent, statement, itemtype) {
-    var e = $('#cucumber-templates .blockelement').clone();
+    var e = $('.blockelement', $templates).clone();
     e.appendTo(parent);
     return populate(e, statement, itemtype);
   }
@@ -121,9 +122,9 @@ CucumberHTML.DOMFormatter = function(rootNode) {
 
   function populateComments(e, comments) {
     if (comments !== undefined) {
-      var commentsNode = $('#cucumber-templates .comments').clone().prependTo(e.find('.header'));
+      var commentsNode = $('.comments', $templates).clone().prependTo(e.find('.header'));
       $.each(comments, function(index, comment) {
-        var commentNode = $('#cucumber-templates .comment').clone().appendTo(commentsNode);
+        var commentNode = $('.comment', $templates).clone().appendTo(commentsNode);
         commentNode.text(comment.value);
       });
     }
@@ -131,14 +132,51 @@ CucumberHTML.DOMFormatter = function(rootNode) {
 
   function populateTags(e, tags) {
     if (tags !== undefined) {
-      var tagsNode = $('#cucumber-templates .tags').clone().prependTo(e.find('.header'));
+      var tagsNode = $('.tags', $templates).clone().prependTo(e.find('.header'));
       $.each(tags, function(index, tag) {
-        var tagNode = $('#cucumber-templates .tag').clone().appendTo(tagsNode);
+        var tagNode = $('.tag', $templates).clone().appendTo(tagsNode);
         tagNode.text(tag.name);
       });
     }
   }
 };
+
+CucumberHTML.templates = '<div>\
+  <section class="blockelement" itemscope>\
+    <details open>\
+      <summary class="header">\
+        <span class="keyword" itemprop="keyword">Keyword</span>: <span itemprop="name" class="name">This is the block name</span>\
+      </summary>\
+      <div itemprop="description" class="description">The description goes here</div>\
+    </details>\
+  </section>\
+\
+  <ol class="steps"></ol>\
+\
+  <ol>\
+    <li class="step"><span class="keyword" itemprop="keyword">Keyword</span><span class="name" itemprop="name">Name</span></li>\
+  </ol>\
+\
+  <pre class="doc_string"></pre>\
+\
+  <table class="data_table">\
+    <tbody>\
+    </tbody>\
+  </table>\
+\
+  <table class="examples_table">\
+    <thead></thead>\
+    <tbody></tbody>\
+  </table>\
+\
+  <section class="embed">\
+    <img itemprop="screenshot" class="screenshot" />\
+  </section>\
+  <div class="tags"></div>\
+  <span class="tag"></span>\
+  <div class="comments"></div>\
+  <div class="comment"></div>\
+<div>';
 
 if (typeof module !== 'undefined') {
   module.exports = CucumberHTML;
