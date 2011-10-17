@@ -1,4 +1,5 @@
-Cucumber-HTML is a cross-platform HTML formatter for all the Cucumber implementations.
+Cucumber-HTML is a cross-platform HTML formatter for all the Cucumber implementations. It's currently only used by Cucumber-JVM,
+but may be used by other implementations later.
 
 ## Prerequisites
 
