@@ -80,10 +80,4 @@
             </build>
         </profile>
     </profiles>
-
-  <scm>
-    <connection>scm:svn:http://svn.sonatype.org/spice/tags/v0.2.1</connection>
-    <developerConnection>scm:svn:https://svn.sonatype.org/spice/tags/v0.2.1</developerConnection>
-    <url>http://svn.sonatype.org/spice/tags/v0.2.1</url>
-  </scm>
 </project>
