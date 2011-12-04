@@ -5,6 +5,7 @@ release-jar:
 	mvn release:clean
 	mvn --batch-mode -P release-sign-artifacts release:prepare
 	mvn --batch-mode -P release-sign-artifacts release:perform
+	@echo "************ CLOSE and RELEASE at https://oss.sonatype.org/index.html#stagingRepositories ************"
 
 release-npm:
 	npm publish
