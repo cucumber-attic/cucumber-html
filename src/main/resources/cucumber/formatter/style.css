@@ -80,6 +80,13 @@
   padding 0;
 }
 
+.cucumber-report .error {
+  margin: .2em .75em;
+  padding: .2em;
+  border: 1px solid #900;
+  background-color: #EDBBBB;
+}
+
 #cucumber-templates {
   display: none;
 }

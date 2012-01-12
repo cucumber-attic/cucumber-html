@@ -78,18 +78,23 @@ CucumberHTML.DOMFormatter = function(rootNode) {
 
   this.result = function(result) {
     currentStep.addClass(result.status);
+    if (result.status == 'failed') {
+      populateStepError(currentStep, result.error_message);
+    }
     currentElement.addClass(result.status);
     var isLastStep = currentSteps.find('li:nth-child(' + currentStepIndex + ')').length == 0;
-    if(isLastStep) {
-      if(currentSteps.find('.failed').length == 0) {
+    if (isLastStep) {
+      if (currentSteps.find('.failed').length == 0) {
         // No failed steps. Collapse it.
         currentElement.find('details').removeAttr('open');
+      } else {
+        currentElement.find('details').attr('open', 'open');
       }
     }
   };
 
   this.embedding = function(mimeType, data) {
-    if(mimeType.match(/^image\//)) {
+    if (mimeType.match(/^image\//)) {
       currentStep.append("<div><img src='" + data + "'></div>");
     }
   }
@@ -139,6 +144,13 @@ CucumberHTML.DOMFormatter = function(rootNode) {
       });
     }
   }
+
+  function populateStepError(e, error) {
+    if (error !== undefined) {
+      errorNode = $('.error', $templates).clone().appendTo(e);
+      errorNode.text(error);
+    }
+  }
 };
 
 CucumberHTML.templates = '<div>\
@@ -158,6 +170,8 @@ CucumberHTML.templates = '<div>\
   </ol>\
 \
   <pre class="doc_string"></pre>\
+\
+  <pre class="error"></pre>\
 \
   <table class="data_table">\
     <tbody>\
