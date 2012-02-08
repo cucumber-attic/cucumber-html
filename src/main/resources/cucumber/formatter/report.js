@@ -1,5 +1,6 @@
 $(document).ready(function() {
   var formatter = new CucumberHTML.DOMFormatter($('.cucumber-report'));
+for(var n = 0; n < 200; n++) {
   formatter.uri('report.feature');
   formatter.feature({
     comments: [
@@ -52,4 +53,5 @@ $(document).ready(function() {
   formatter.result({status:'passed', duration: 0});
   formatter.match({uri:'report.feature'});
   formatter.result({status:'failed', error_message:'I didn\'t do it.', duration: 0});
+}
 });
