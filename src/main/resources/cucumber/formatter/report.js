@@ -1,6 +1,8 @@
 $(document).ready(function() {
   var formatter = new CucumberHTML.DOMFormatter($('.cucumber-report'));
-for(var n = 0; n < 200; n++) {
+var N = 200;
+var start = new Date().getTime();
+for(var n = 0; n < N; n++) {
   formatter.uri('report.feature');
   formatter.feature({
     comments: [
@@ -54,4 +56,6 @@ for(var n = 0; n < 200; n++) {
   formatter.match({uri:'report.feature'});
   formatter.result({status:'failed', error_message:'I didn\'t do it.', duration: 0});
 }
+console.log('Rendered %s features in %s ms', N, new Date().getTime() - start);
+
 });
