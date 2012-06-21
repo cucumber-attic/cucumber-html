@@ -95,8 +95,12 @@ CucumberHTML.DOMFormatter = function(rootNode) {
 
   this.embedding = function(mimeType, data) {
     if (mimeType.match(/^image\//)) {
-      currentStep.append("<div><img src='" + data + "'></div>");
+      currentSteps.append("<div><img src='" + data + "'></div>");
     }
+  }
+
+  this.write = function(text) {
+    currentSteps.append("<div><p>" + text + "</p></div>");
   }
 
   function featureElement(statement, itemtype) {
