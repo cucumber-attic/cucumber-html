@@ -8,7 +8,13 @@ CucumberHTML.DOMFormatter = function(rootNode) {
 
   var currentStepIndex;
   var currentStep;
-  var $templates = $(CucumberHTML.templates);
+  var $templates;
+
+  if ($('#older-ie-browser').length > 0) {
+    $templates = $(CucumberHTML.templatesHtml4);
+  } else {
+    $templates = $(CucumberHTML.templates);
+  }
 
   this.uri = function(uri) {
     currentUri = uri;
@@ -58,9 +64,9 @@ CucumberHTML.DOMFormatter = function(rootNode) {
   };
 
   this.examples = function(examples) {
-    var examplesElement = blockElement(currentElement.children('details'), examples, 'examples');
+    var examplesElement = blockElement(currentElement.children('.details'), examples, 'examples');
     var examplesTable = $('.examples_table', $templates).clone();
-    examplesTable.appendTo(examplesElement.children('details'));
+    examplesTable.appendTo(examplesElement.children('.details'));
 
     $.each(examples.rows, function(index, row) {
       var parent = index == 0 ? examplesTable.find('thead') : examplesTable.find('tbody');
@@ -86,9 +92,9 @@ CucumberHTML.DOMFormatter = function(rootNode) {
     if (isLastStep) {
       if (currentSteps.find('.failed').length == 0) {
         // No failed steps. Collapse it.
-        currentElement.find('details').removeAttr('open');
+        currentElement.find('.details').removeAttr('open');
       } else {
-        currentElement.find('details').attr('open', 'open');
+        currentElement.find('.details').attr('open', 'open');
       }
     }
   };
@@ -100,10 +106,10 @@ CucumberHTML.DOMFormatter = function(rootNode) {
   }
 
   function featureElement(statement, itemtype) {
-    var e = blockElement(currentFeature.children('details'), statement, itemtype);
+    var e = blockElement(currentFeature.children('.details'), statement, itemtype);
 
     currentSteps = $('.steps', $templates).clone();
-    currentSteps.appendTo(e.children('details'));
+    currentSteps.appendTo(e.children('.details'));
 
     return e;
   }
@@ -129,8 +135,10 @@ CucumberHTML.DOMFormatter = function(rootNode) {
     if (comments !== undefined) {
       var commentsNode = $('.comments', $templates).clone().prependTo(e.find('.header'));
       $.each(comments, function(index, comment) {
-        var commentNode = $('.comment', $templates).clone().appendTo(commentsNode);
-        commentNode.text(comment.value);
+        if (comment != undefined && comment.value != undefined) {
+          var commentNode = $('.comment', $templates).clone().appendTo(commentsNode);
+          commentNode.text(comment.value);
+        }
       });
     }
   }
@@ -154,9 +162,9 @@ CucumberHTML.DOMFormatter = function(rootNode) {
 };
 
 CucumberHTML.templates = '<div>\
-  <section class="blockelement" itemscope>\
-    <details open>\
-      <summary class="header">\
+  <section class="blockelement section" itemscope>\
+    <details class="details" open>\
+      <summary class="header summary">\
         <span class="keyword" itemprop="keyword">Keyword</span>: <span itemprop="name" class="name">This is the block name</span>\
       </summary>\
       <div itemprop="description" class="description">The description goes here</div>\
@@ -183,9 +191,46 @@ CucumberHTML.templates = '<div>\
     <tbody></tbody>\
   </table>\
 \
-  <section class="embed">\
+  <section class="embed section">\
     <img itemprop="screenshot" class="screenshot" />\
   </section>\
+  <div class="tags"></div>\
+  <span class="tag"></span>\
+  <div class="comments"></div>\
+  <div class="comment"></div>\
+<div>';
+
+CucumberHTML.templatesHtml4 = '<div>\
+  <div class="blockelement" itemscope>\
+    <div class="details" open>\
+      <div class="header">\
+        <span class="keyword" itemprop="keyword">Keyword</span>: <span itemprop="name" class="name">This is the block name</span>\
+      </div>\
+      <div itemprop="description" class="description">The description goes here</div>\
+    </div>\
+  </div>\
+\
+  <ol class="steps"></ol>\
+\
+  <ol>\
+    <li class="step"><span class="keyword" itemprop="keyword">Keyword</span><span class="name" itemprop="name">Name</span></li>\
+  </ol>\
+\
+  <pre class="doc_string"></pre>\
+\
+  <table class="data_table">\
+    <tbody>\
+    </tbody>\
+  </table>\
+\
+  <table class="examples_table">\
+    <thead></thead>\
+    <tbody></tbody>\
+  </table>\
+\
+  <div class="embed section">\
+    <img itemprop="screenshot" class="screenshot" />\
+  </div>\
   <div class="tags"></div>\
   <span class="tag"></span>\
   <div class="comments"></div>\
