@@ -21,7 +21,8 @@ CucumberHTML.DOMFormatter = function(rootNode) {
   };
 
   this.feature = function(feature) {
-    currentFeature = blockElement(rootNode, feature, 'feature');
+    currentFeature = blockElement(null, feature, 'feature');
+	currentFeature.appendTo(rootNode);
   };
 
   this.background = function(background) {
@@ -41,40 +42,45 @@ CucumberHTML.DOMFormatter = function(rootNode) {
 
   this.step = function(step) {
     var stepElement = $('.step', $templates).clone();
-    stepElement.appendTo(currentSteps);
     populate(stepElement, step, 'step');
 
     if (step.doc_string) {
       docString = $('.doc_string', $templates).clone();
-      docString.appendTo(stepElement);
       // TODO: use a syntax highlighter based on the content_type
       docString.text(step.doc_string.value);
+      docString.appendTo(stepElement);
     }
     if (step.rows) {
       dataTable = $('.data_table', $templates).clone();
-      dataTable.appendTo(stepElement);
       var tBody = dataTable.find('tbody');
+	  var cont = ""
       $.each(step.rows, function(index, row) {
-        var tr = $('<tr></tr>').appendTo(tBody);
+		var tds = "";
         $.each(row.cells, function(index, cell) {
-          var td = $('<td>' + cell + '</td>').appendTo(tBody);
+		  tds += '<td>'+cell+'</td>';
         });
+		cont += '<tr>'+tds+'</tr>';
       });
+	  $(cont).appendTo(tBody);
+      dataTable.appendTo(stepElement);
     }
+    stepElement.appendTo(currentSteps);
   };
 
   this.examples = function(examples) {
-    var examplesElement = blockElement(currentElement.children('.details'), examples, 'examples');
     var examplesTable = $('.examples_table', $templates).clone();
-    examplesTable.appendTo(examplesElement.children('.details'));
-
+	var thead = examplesTable.find('thead');
+	var tbody = examplesTable.find('tbody');
     $.each(examples.rows, function(index, row) {
-      var parent = index == 0 ? examplesTable.find('thead') : examplesTable.find('tbody');
-      var tr = $('<tr></tr>').appendTo(parent);
+	  var tds = "";
       $.each(row.cells, function(index, cell) {
-        var td = $('<td>' + cell + '</td>').appendTo(tr);
+		tds += '<td>' + cell + '</td>';
       });
+      var parent = index == 0 ? thead : tbody;
+	  $('<tr>'+tds+'</tr>').appendTo(parent);
     });
+    var examplesElement = blockElement(currentElement.children('.details'), examples, 'examples');
+    examplesTable.appendTo(examplesElement.children('.details'));
   };
 
   this.match = function(match) {
@@ -116,8 +122,11 @@ CucumberHTML.DOMFormatter = function(rootNode) {
 
   function blockElement(parent, statement, itemtype) {
     var e = $('.blockelement', $templates).clone();
-    e.appendTo(parent);
-    return populate(e, statement, itemtype);
+	populate(e, statement, itemtype);
+	if (parent != null) {
+	  e.appendTo(parent);
+	}
+    return e;
   }
 
   function populate(e, statement, itemtype) {
@@ -133,23 +142,27 @@ CucumberHTML.DOMFormatter = function(rootNode) {
 
   function populateComments(e, comments) {
     if (comments !== undefined) {
-      var commentsNode = $('.comments', $templates).clone().prependTo(e.find('.header'));
+      var commentsNode = $('.comments', $templates).clone();
+	  var commentNode = $('.comment', $templates);
       $.each(comments, function(index, comment) {
         if (comment != undefined && comment.value != undefined) {
-          var commentNode = $('.comment', $templates).clone().appendTo(commentsNode);
-          commentNode.text(comment.value);
+		  var cN = commentNode.clone().text(comment.value);
+          cN.appendTo(commentsNode);
         }
       });
+	  commentsNode.prependTo(e.find('.header'));
     }
   }
 
   function populateTags(e, tags) {
     if (tags !== undefined) {
-      var tagsNode = $('.tags', $templates).clone().prependTo(e.find('.header'));
+      var tagsNode = $('.tags', $templates).clone();
+	  var tagNode = $('.tag', $templates);
       $.each(tags, function(index, tag) {
-        var tagNode = $('.tag', $templates).clone().appendTo(tagsNode);
-        tagNode.text(tag.name);
+		var tN = tagNode.clone().text(tag.name);
+		tN.appendTo(tagsNode);
       });
+	  tagsNode.prependTo(e.find('.header'));
     }
   }
 
