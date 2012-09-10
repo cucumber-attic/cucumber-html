@@ -94,8 +94,13 @@ CucumberHTML.DOMFormatter = function(rootNode) {
   };
 
   this.embedding = function(mimeType, data) {
-    if (mimeType.match(/^image\//)) {
-      currentStep.append("<div><img src='" + data + "'></div>");
+    if (mimeType.match(/^image\//)) 
+    {
+      currentStep.append("<div class='embeddedImage'><img src='" + data + "'></div>");
+    }
+    else if (mimeType.match(/^video\//)) 
+    {
+    	currentStep.append("<div class='embeddedVideo'><video src='" + data + "' width='600' height='700' autobuffer='autobuffer' controls='controls'/></div>");
     }
   }
 
