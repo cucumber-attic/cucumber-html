@@ -100,7 +100,7 @@ CucumberHTML.DOMFormatter = function(rootNode) {
     }
     else if (mimeType.match(/^video\//)) 
     {
-    	currentStep.append("<div class='embeddedVideo'><video src='" + data + "' width='600' height='700' autobuffer='autobuffer' controls='controls'/></div>");
+      currentStep.append('<div class=embeddedVideo><video src="' + data + '" type="' + mimeType + '" autobuffer controls>Your browser doesn\'t support video.</video></div>');
     }
   }
 

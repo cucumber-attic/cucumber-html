@@ -43,6 +43,7 @@ for(var n = 0; n < N; n++) {
   formatter.embedding('image/png', 'bubble_256x256.png');
   formatter.match({uri:'report.feature'});
   formatter.result({status:'undefined', duration: 0});
+  formatter.embedding('video/mp4', 'http://www.808.dk/pics/video/gizmo.mp4');
   formatter.match({uri:'report.feature'});
   formatter.result({status:'skipped', duration: 0});
 
