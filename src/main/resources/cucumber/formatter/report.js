@@ -1,6 +1,6 @@
 $(document).ready(function() {
   var formatter = new CucumberHTML.DOMFormatter($('.cucumber-report'));
-var N = 200;
+var N = document.location.hash ? parseInt(document.location.hash.substring(1)) : 1;
 var start = new Date().getTime();
 for(var n = 0; n < N; n++) {
   formatter.uri('report.feature');
