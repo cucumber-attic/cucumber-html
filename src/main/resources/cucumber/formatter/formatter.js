@@ -96,12 +96,20 @@ CucumberHTML.DOMFormatter = function(rootNode) {
   this.embedding = function(mimeType, data) {
     if (mimeType.match(/^image\//)) 
     {
-      currentStep.append("<div class='embeddedImage'><img src='" + data + "'></div>");
+      currentStep.append('<img src="' + data + '">');
     }
     else if (mimeType.match(/^video\//)) 
     {
-      currentStep.append('<div class=embeddedVideo><video src="' + data + '" type="' + mimeType + '" autobuffer controls>Your browser doesn\'t support video.</video></div>');
+      currentStep.append('<video src="' + data + '" type="' + mimeType + '" autobuffer controls>Your browser doesn\'t support video.</video>');
     }
+    else if (mimeType.match(/^text\//)) 
+    {
+      this.write(data);
+    }
+  };
+
+  this.write = function(text) {
+    currentStep.append('<pre class="embedded-text">' + text + '</pre>');
   }
 
   function featureElement(statement, itemtype) {

@@ -21,6 +21,10 @@
   margin-bottom: 0;
 }
 
+.cucumber-report .step .embedded-text {
+  background: #dddddd;
+}
+
 .cucumber-report .doc_string {
   margin: 0 0 0 20px;
 }
