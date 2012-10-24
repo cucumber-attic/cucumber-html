@@ -29,7 +29,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>2.3.2</version>
+                <version>2.4</version>
                 <configuration>
                     <excludes>
                         <exclude>**/bubble*</exclude>
@@ -52,8 +52,9 @@
             <build>
                 <plugins>
                     <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-release-plugin</artifactId>
-                        <version>2.2.1</version>
+                        <version>2.3.2</version>
                         <configuration>
                             <tagNameFormat>v@{project.version}</tagNameFormat>
                         </configuration>
@@ -62,7 +63,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
-                        <version>1.1</version>
+                        <version>1.4</version>
                         <configuration>
                             <useAgent>true</useAgent>
                         </configuration>
