@@ -8,14 +8,21 @@ CucumberHTML.DOMFormatter = function(rootNode) {
 
   var currentStepIndex;
   var currentStep;
-  var $templates = $(CucumberHTML.templates);
+  var $templates;
+
+  if ($('#older-ie-browser').length > 0) {
+    $templates = $(CucumberHTML.templatesHtml4);
+  } else {
+    $templates = $(CucumberHTML.templates);
+  }
 
   this.uri = function(uri) {
     currentUri = uri;
   };
 
   this.feature = function(feature) {
-    currentFeature = blockElement(rootNode, feature, 'feature');
+    currentFeature = blockElement(null, feature, 'feature');
+	currentFeature.appendTo(rootNode);
   };
 
   this.background = function(background) {
@@ -35,40 +42,45 @@ CucumberHTML.DOMFormatter = function(rootNode) {
 
   this.step = function(step) {
     var stepElement = $('.step', $templates).clone();
-    stepElement.appendTo(currentSteps);
     populate(stepElement, step, 'step');
 
     if (step.doc_string) {
       docString = $('.doc_string', $templates).clone();
-      docString.appendTo(stepElement);
       // TODO: use a syntax highlighter based on the content_type
       docString.text(step.doc_string.value);
+      docString.appendTo(stepElement);
     }
     if (step.rows) {
       dataTable = $('.data_table', $templates).clone();
-      dataTable.appendTo(stepElement);
       var tBody = dataTable.find('tbody');
+	  var cont = ""
       $.each(step.rows, function(index, row) {
-        var tr = $('<tr></tr>').appendTo(tBody);
+		var tds = "";
         $.each(row.cells, function(index, cell) {
-          var td = $('<td>' + cell + '</td>').appendTo(tBody);
+		  tds += '<td>'+cell+'</td>';
         });
+		cont += '<tr>'+tds+'</tr>';
       });
+	  $(cont).appendTo(tBody);
+      dataTable.appendTo(stepElement);
     }
+    stepElement.appendTo(currentSteps);
   };
 
   this.examples = function(examples) {
-    var examplesElement = blockElement(currentElement.children('details'), examples, 'examples');
     var examplesTable = $('.examples_table', $templates).clone();
-    examplesTable.appendTo(examplesElement.children('details'));
-
+	var thead = examplesTable.find('thead');
+	var tbody = examplesTable.find('tbody');
     $.each(examples.rows, function(index, row) {
-      var parent = index == 0 ? examplesTable.find('thead') : examplesTable.find('tbody');
-      var tr = $('<tr></tr>').appendTo(parent);
+	  var tds = "";
       $.each(row.cells, function(index, cell) {
-        var td = $('<td>' + cell + '</td>').appendTo(tr);
+		tds += '<td>' + cell + '</td>';
       });
+      var parent = index == 0 ? thead : tbody;
+	  $('<tr>'+tds+'</tr>').appendTo(parent);
     });
+    var examplesElement = blockElement(currentElement.children('.details'), examples, 'examples');
+    examplesTable.appendTo(examplesElement.children('.details'));
   };
 
   this.match = function(match) {
@@ -86,9 +98,9 @@ CucumberHTML.DOMFormatter = function(rootNode) {
     if (isLastStep) {
       if (currentSteps.find('.failed').length == 0) {
         // No failed steps. Collapse it.
-        currentElement.find('details').removeAttr('open');
+        currentElement.find('.details').removeAttr('open');
       } else {
-        currentElement.find('details').attr('open', 'open');
+        currentElement.find('.details').attr('open', 'open');
       }
     }
   };
@@ -113,18 +125,21 @@ CucumberHTML.DOMFormatter = function(rootNode) {
   }
 
   function featureElement(statement, itemtype) {
-    var e = blockElement(currentFeature.children('details'), statement, itemtype);
+    var e = blockElement(currentFeature.children('.details'), statement, itemtype);
 
     currentSteps = $('.steps', $templates).clone();
-    currentSteps.appendTo(e.children('details'));
+    currentSteps.appendTo(e.children('.details'));
 
     return e;
   }
 
   function blockElement(parent, statement, itemtype) {
     var e = $('.blockelement', $templates).clone();
-    e.appendTo(parent);
-    return populate(e, statement, itemtype);
+	populate(e, statement, itemtype);
+	if (parent != null) {
+	  e.appendTo(parent);
+	}
+    return e;
   }
 
   function populate(e, statement, itemtype) {
@@ -140,21 +155,27 @@ CucumberHTML.DOMFormatter = function(rootNode) {
 
   function populateComments(e, comments) {
     if (comments !== undefined) {
-      var commentsNode = $('.comments', $templates).clone().prependTo(e.find('.header'));
+      var commentsNode = $('.comments', $templates).clone();
+	  var commentNode = $('.comment', $templates);
       $.each(comments, function(index, comment) {
-        var commentNode = $('.comment', $templates).clone().appendTo(commentsNode);
-        commentNode.text(comment.value);
+        if (comment != undefined && comment.value != undefined) {
+		  var cN = commentNode.clone().text(comment.value);
+          cN.appendTo(commentsNode);
+        }
       });
+	  commentsNode.prependTo(e.find('.header'));
     }
   }
 
   function populateTags(e, tags) {
     if (tags !== undefined) {
-      var tagsNode = $('.tags', $templates).clone().prependTo(e.find('.header'));
+      var tagsNode = $('.tags', $templates).clone();
+	  var tagNode = $('.tag', $templates);
       $.each(tags, function(index, tag) {
-        var tagNode = $('.tag', $templates).clone().appendTo(tagsNode);
-        tagNode.text(tag.name);
+		var tN = tagNode.clone().text(tag.name);
+		tN.appendTo(tagsNode);
       });
+	  tagsNode.prependTo(e.find('.header'));
     }
   }
 
@@ -167,9 +188,9 @@ CucumberHTML.DOMFormatter = function(rootNode) {
 };
 
 CucumberHTML.templates = '<div>\
-  <section class="blockelement" itemscope>\
-    <details open>\
-      <summary class="header">\
+  <section class="blockelement section" itemscope>\
+    <details class="details" open>\
+      <summary class="header summary">\
         <span class="keyword" itemprop="keyword">Keyword</span>: <span itemprop="name" class="name">This is the block name</span>\
       </summary>\
       <div itemprop="description" class="description">The description goes here</div>\
@@ -196,9 +217,46 @@ CucumberHTML.templates = '<div>\
     <tbody></tbody>\
   </table>\
 \
-  <section class="embed">\
+  <section class="embed section">\
     <img itemprop="screenshot" class="screenshot" />\
   </section>\
+  <div class="tags"></div>\
+  <span class="tag"></span>\
+  <div class="comments"></div>\
+  <div class="comment"></div>\
+<div>';
+
+CucumberHTML.templatesHtml4 = '<div>\
+  <div class="blockelement" itemscope>\
+    <div class="details" open>\
+      <div class="header">\
+        <span class="keyword" itemprop="keyword">Keyword</span>: <span itemprop="name" class="name">This is the block name</span>\
+      </div>\
+      <div itemprop="description" class="description">The description goes here</div>\
+    </div>\
+  </div>\
+\
+  <ol class="steps"></ol>\
+\
+  <ol>\
+    <li class="step"><span class="keyword" itemprop="keyword">Keyword</span><span class="name" itemprop="name">Name</span></li>\
+  </ol>\
+\
+  <pre class="doc_string"></pre>\
+\
+  <table class="data_table">\
+    <tbody>\
+    </tbody>\
+  </table>\
+\
+  <table class="examples_table">\
+    <thead></thead>\
+    <tbody></tbody>\
+  </table>\
+\
+  <div class="embed section">\
+    <img itemprop="screenshot" class="screenshot" />\
+  </div>\
   <div class="tags"></div>\
   <span class="tag"></span>\
   <div class="comments"></div>\
