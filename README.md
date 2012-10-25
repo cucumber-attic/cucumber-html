@@ -3,7 +3,7 @@ Cucumber-HTML is a cross-platform HTML formatter for all the Cucumber implementa
 
 ## Prerequisites
 
-The formatter generates HTML that conforms to the HTML5 specification, so you need a modern browser to see the results.
+The formatter generates HTML that conforms either to the HTML5 specification, or HTML4 if the browser is a IE below version 9.
 
 ## Generating PDF
 
