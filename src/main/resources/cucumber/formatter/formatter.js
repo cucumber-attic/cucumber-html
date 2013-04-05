@@ -110,7 +110,23 @@ CucumberHTML.DOMFormatter = function(rootNode) {
 
   this.write = function(text) {
     currentStep.append('<pre class="embedded-text">' + text + '</pre>');
-  }
+  };
+
+  this.before = function(before) {
+    if(before.status != 'passed') {
+      currentElement = featureElement({keyword: 'Before', name: '', description: ''}, 'before');
+      currentStepIndex = 1;
+      populateStepError($('details', currentElement), before.error_message);
+    }
+  };
+
+  this.after = function(after) {
+    if(after.status != 'passed') {
+      currentElement = featureElement({keyword: 'After', name: '', description: ''}, 'after');
+      currentStepIndex++;
+      populateStepError($('details', currentElement), after.error_message);
+    }
+  };
 
   function featureElement(statement, itemtype) {
     var e = blockElement(currentFeature.children('details'), statement, itemtype);
