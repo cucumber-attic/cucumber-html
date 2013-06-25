@@ -127,6 +127,18 @@ CucumberHTML.DOMFormatter = function(rootNode) {
       populateStepError($('details', currentElement), after.error_message);
     }
   };
+  
+  this.summary = function(summary) {
+    reportSummary(rootNode, summary)
+  };
+
+  function reportSummary(parent, summary) {
+    var e = $('.summary', $templates).clone();
+    e.prependTo(parent)
+    e.find('.scenario_summary').text(summary.scenarios);
+    e.find('.step_summary').text(summary.steps);
+    e.find('.total_duration').text(summary.duration);
+  }
 
   function featureElement(statement, itemtype) {
     var e = blockElement(currentFeature.children('details'), statement, itemtype);
@@ -211,6 +223,15 @@ CucumberHTML.templates = '<div>\
     <thead></thead>\
     <tbody></tbody>\
   </table>\
+\
+  <section class="summary" itemscope>\
+    <summary class="header">\
+      <span class="keyword" itemprop="keyword">Summary:</span>\
+    </summary>\
+    <div itemprop="scenario_summary" class="scenario_summary summary_item">Scenario summary</div>\
+    <div itemprop="step_summary" class="step_summary summary_item">Steps summary</div>\
+    <div itemprop="total_duration" class="total_duration summary_item">Total duration</div>\
+  </section>\
 \
   <section class="embed">\
     <img itemprop="screenshot" class="screenshot" />\

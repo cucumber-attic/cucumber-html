@@ -11,6 +11,10 @@
   margin-left: 20px;
 }
 
+.cucumber-report .summary_item {
+  margin-left: 20px;
+}
+
 .cucumber-report details > section {
   margin-left: 20px;
 }

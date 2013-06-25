@@ -62,6 +62,7 @@ for(var n = 0; n < N; n++) {
   formatter.match({uri:'report.feature'});
   formatter.result({status:'failed', error_message:'I didn\'t do it.', duration: 0});
   formatter.after({status: 'failed', duration: 668816288, "error_message": 'com.example.MyDodgyException: Widget underflow\r\n\tat org.codehaus.groovy.runtime.metaclass.ClosureMetaClass.invokeMethod(ClosureMetaClass.java:264)\r\n\tat com.example.WidgetFurbicator.furbicateWidgets(WidgetFurbicator.java:678)'});
+  formatter.summary({scenarios: '2 Scenarios (2 failed)', steps: '9 Steps (2 failed, 1 undefined, 1 skipped, 5 passed)', duration: '0m1.023s'});
 }
 console.log('Rendered %s features in %s ms', N, new Date().getTime() - start);
 
