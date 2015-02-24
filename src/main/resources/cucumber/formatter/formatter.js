@@ -10,6 +10,36 @@ CucumberHTML.DOMFormatter = function(rootNode) {
   var currentStep;
   var $templates = $(CucumberHTML.templates);
 
+  var numberSteps = 0;
+  var numberStepsFailed = 0;
+  var numberScenarios = 0;
+  var numberScenariosFailed = 0;
+  var totalDuration = 0.000;
+  var hasEntirelyPassed = true;
+
+  // Draw initial summary
+  (function()
+  {
+    $('.cucumber-report').append( '<div id="cucumber-header"><div id="label"><h1>Neo Cucumber Acceptance Testing</h1></div><div id="summary"><p id="totals"></p><p id="duration"></div>' );
+  })();
+
+  function updateTotals() {
+    if( numberScenariosFailed > 0){
+      $("#cucumber-header").addClass("failed");
+    }
+    $('#totals').html( numberScenarios  + " scenarios (" + numberScenariosFailed + " failed)<br>" +
+                       numberSteps      + " steps ("     + numberStepsFailed    + " failed)" );
+  }
+
+  function updateDuration(duration) {
+    // duration is in nano seconds
+    var ms = duration / 1000000;
+    totalDuration += ms / 1000;
+    var minutes = Math.floor(totalDuration / 60);
+    var seconds = totalDuration - minutes * 60;
+    $('#duration').text( "Finished in " + minutes + "m" + seconds.toFixed(3) + "s");
+  }
+
   this.uri = function(uri) {
     currentUri = uri;
   };
@@ -26,6 +56,7 @@ CucumberHTML.DOMFormatter = function(rootNode) {
   this.scenario = function(scenario) {
     currentElement = featureElement(scenario, 'scenario');
     currentStepIndex = 1;
+    numberScenarios += 1;
   };
 
   this.scenarioOutline = function(scenarioOutline) {
@@ -34,6 +65,8 @@ CucumberHTML.DOMFormatter = function(rootNode) {
   };
 
   this.step = function(step) {
+    numberSteps += 1;
+
     var stepElement = $('.step', $templates).clone();
     stepElement.appendTo(currentSteps);
     populate(stepElement, step, 'step');
@@ -78,31 +111,38 @@ CucumberHTML.DOMFormatter = function(rootNode) {
 
   this.result = function(result) {
     currentStep.addClass(result.status);
-    if (result.status == 'failed') {
+
+    if (result.duration) {
+      updateDuration(result.duration);
+    }
+
+    // This 'undefined' status is very weird...
+    if (result.status == 'failed' || result.status == 'undefined' ) {
       populateStepError(currentStep, result.error_message);
+
+      numberStepsFailed += 1;
+      numberScenariosFailed += 1;
     }
     currentElement.addClass(result.status);
     var isLastStep = currentSteps.find('li:nth-child(' + currentStepIndex + ')').length == 0;
     if (isLastStep) {
-      if (currentSteps.find('.failed').length == 0) {
-        // No failed steps. Collapse it.
-        currentElement.find('details').removeAttr('open');
-      } else {
-        currentElement.find('details').attr('open', 'open');
-      }
+
+      updateTotals();
+
+      currentElement.find('details').attr('open', 'open');
     }
   };
 
   this.embedding = function(mimeType, data) {
-    if (mimeType.match(/^image\//)) 
+    if (mimeType.match(/^image\//))
     {
       currentStep.append('<img src="' + data + '">');
     }
-    else if (mimeType.match(/^video\//)) 
+    else if (mimeType.match(/^video\//))
     {
       currentStep.append('<video src="' + data + '" type="' + mimeType + '" autobuffer controls>Your browser doesn\'t support video.</video>');
     }
-    else if (mimeType.match(/^text\//)) 
+    else if (mimeType.match(/^text\//))
     {
       this.write(data);
     }

@@ -1,14 +1,15 @@
-.cucumber-report .body {
-  font-family: Helvetica,Arial,sans-serif;
+body {
+  font-size: 0px;
+  margin: 0px;
+  padding: 0px;
+}
+
+.cucumber-report {
+  font: normal 12px "Lucida Grande", Helvetica, sans-serif;
 }
 
 .cucumber-report .keyword {
   font-weight: bold;
-}
-
-.cucumber-report .description {
-  font-style: italic;
-  margin-left: 20px;
 }
 
 .cucumber-report details > section {
@@ -18,7 +19,8 @@
 .cucumber-report ol.steps {
   list-style-type: none;
   margin-top: 0;
-  margin-bottom: 0;
+  margin-bottom: 1.5em;
+  padding-left: 5px;
 }
 
 .cucumber-report .step .embedded-text {
@@ -50,24 +52,13 @@
   background-color: #C0C0C0;
 }
 
-.cucumber-report .passed {
-  background-color: #C5D88A;
-}
-
 .cucumber-report .undefined, .cucumber-report .pending {
   background-color: #EAEC2D;
 }
 
-.cucumber-report .skipped {
-  background-color: #2DEAEC;
-}
-
-.cucumber-report .failed {
-  background-color: #D88A8A;
-}
-
 .cucumber-report .tags {
-  display: inline;
+  /*display: none;*/
+  float:right;
 }
 
 .cucumber-report .tag {
@@ -88,9 +79,126 @@
   margin: .2em .75em;
   padding: .2em;
   border: 1px solid #900;
-  background-color: #EDBBBB;
+  font-size: 11px;
+  background: #fffbd3;
+  color: black;
 }
 
 #cucumber-templates {
   display: none;
+}
+
+.description {
+  white-space: pre;
+  font-size: 12px;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  margin-left: 20px;
+}
+
+.header {
+  font-weight: bold;
+  padding: 3px;
+}
+
+.feature .header {
+  font-size: 1.5em;
+}
+
+.scenario .header {
+  font-size: 12px;
+}
+
+.background .header {
+  font-size: 12px;
+}
+
+.after .header {
+  font-size: 12px;
+}
+
+.scenario_outline .header {
+  font-size: 12px;
+}
+
+.passed .header {
+  background-color: #65c400;
+}
+
+.step {
+  margin: 5px;
+  padding: 3px;
+  padding-left: 18px;
+  font-size: 11px;
+}
+
+.passed.step {
+  background-color: #dbffb4;
+  border-left: 5px solid #65c400;
+  border-bottom: 1px solid #65c400;
+  color: #3d7700;
+}
+
+.failed.step {
+  border-left: 5px solid #c20000;
+  border-bottom: 1px solid #c20000;
+  background: #fffbd3;
+  color: #c20000;
+}
+
+.skipped.step {
+  border-left: 5px solid aqua;
+  border-bottom: 1px solid aqua;
+  background: #e0ffff;
+  color: #001111;
+}
+
+.scenario .header {
+  color: white;
+}
+.background .header {
+  color: white;
+  background-color: #666;
+}
+
+.skipped .header {
+  background-color:  #2DEAEC;
+}
+
+.failed .header {
+  background: rgb(196, 13, 13);
+}
+
+.feature {
+  margin-top: 3em;
+}
+
+img {
+  margin-top: 10px;
+  display:block;
+}
+
+#label {
+  position: absolute;
+}
+
+h1 {
+  margin: 0px 10px;
+  padding: 10px;
+}
+
+#summary {
+  text-align: right;
+  float: right;
+  padding: 0px 10px;
+}
+
+#cucumber-header {
+  color: white;
+  height: 6em;
+  background-color: #65c400;
+}
+
+#cucumber-header.failed {
+  background-color: rgb(196, 13, 13);
 }
