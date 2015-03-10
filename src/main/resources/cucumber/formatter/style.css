@@ -165,6 +165,11 @@ body {
   background-color:  #2DEAEC;
 }
 
+.undefined .header {
+  color: #000;
+  background-color: #EAEC2D;
+}
+
 .failed .header {
   background: rgb(196, 13, 13);
 }
