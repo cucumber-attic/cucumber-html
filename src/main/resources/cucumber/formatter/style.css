@@ -181,6 +181,7 @@ body {
 img {
   margin-top: 10px;
   display:block;
+  max-width: 100%;
 }
 
 #label {
