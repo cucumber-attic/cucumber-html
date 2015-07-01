@@ -1,7 +1,7 @@
 body {
-  font-size: 0px;
-  margin: 0px;
-  padding: 0px;
+  font-size: 0;
+  margin: 0;
+  padding: 0;
 }
 
 .cucumber-report {
@@ -33,13 +33,11 @@ body {
 
 .cucumber-report table {
   border-collapse: collapse;
-  border: 1px;
-  border-style: solid;
+  border: 1px solid;
 }
 
 .cucumber-report td, .cucumber-report th {
-  border: 1px;
-  border-style: solid;
+  border: 1px solid;
   padding-left: 4px;
   padding-right: 4px;
 }
@@ -82,6 +80,7 @@ body {
   font-size: 11px;
   background: #fffbd3;
   color: black;
+  overflow-x: auto;
 }
 
 #cucumber-templates {
@@ -127,8 +126,7 @@ body {
 
 .step {
   margin: 5px;
-  padding: 3px;
-  padding-left: 18px;
+  padding: 3px 3px 3px 18px;
   font-size: 11px;
 }
 
@@ -189,14 +187,14 @@ img {
 }
 
 h1 {
-  margin: 0px 10px;
+  margin: 0 10px;
   padding: 10px;
 }
 
 #summary {
   text-align: right;
   float: right;
-  padding: 0px 10px;
+  padding: 0 10px;
 }
 
 #cucumber-header {
