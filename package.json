@@ -1,5 +1,6 @@
 {
   "author": "Aslak Hellesøy <aslak.hellesoy@gmail.com>",
+  "license": "MIT",
   "contributors": ["Cédric Lamalle <cedric.lamalle@gmail.com>", "Julien Biezemans <jb@jbpros.com>"],
   "name": "cucumber-html",
   "description": "Cross platform HTML formatter for all implementations of Cucumber",
