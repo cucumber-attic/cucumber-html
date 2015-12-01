@@ -80,8 +80,8 @@
 }
 
 .cucumber-report .comment {
-  margin 0;
-  padding 0;
+  margin: 0;
+  padding: 0;
 }
 
 .cucumber-report .error {
