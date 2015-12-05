@@ -72,7 +72,7 @@ CucumberHTML.DOMFormatter = function(rootNode) {
   };
 
   this.match = function(match) {
-    currentStep = currentSteps.find('li:nth-child(' + currentStepIndex + ')');
+    currentStep = currentSteps.find('li:nth-of-type(' + currentStepIndex + ')');
     currentStepIndex++;
   };
 
@@ -82,9 +82,9 @@ CucumberHTML.DOMFormatter = function(rootNode) {
       populateStepError(currentStep, result.error_message);
     }
     currentElement.addClass(result.status);
-    var isLastStep = currentSteps.find('li:nth-child(' + currentStepIndex + ')').length == 0;
+    var isLastStep = currentSteps.find('li:nth-of-type(' + currentStepIndex + ')').length == 0;
     if (isLastStep) {
-      if (currentSteps.find('.failed').length == 0) {
+      if (currentElement.hasClass('.failed')) {
         // No failed steps. Collapse it.
         currentElement.find('details').removeAttr('open');
       } else {
@@ -128,6 +128,18 @@ CucumberHTML.DOMFormatter = function(rootNode) {
     }
   };
 
+  this.afterStep = function(afterStep) {
+    if(afterStep.status != 'passed') {
+      currentElement.addClass(afterStep.status);
+
+      var afterStepElement = blockElement(null, {keyword: 'AfterStep', name: '', description: ''}, 'afterStep');
+      $(currentStep.nextUntil('.step').last()[0] || currentStep)
+          .after(afterStepElement);
+
+      populateStepError($('details', afterStepElement), afterStep.error_message);
+    }
+  };
+
   function featureElement(statement, itemtype) {
     var e = blockElement(currentFeature.children('details'), statement, itemtype);
 
@@ -139,7 +151,9 @@ CucumberHTML.DOMFormatter = function(rootNode) {
 
   function blockElement(parent, statement, itemtype) {
     var e = $('.blockelement', $templates).clone();
-    e.appendTo(parent);
+    if (parent) {
+      e.appendTo(parent);
+    }
     return populate(e, statement, itemtype);
   }
 
