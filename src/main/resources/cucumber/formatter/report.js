@@ -7,11 +7,11 @@ for(var n = 0; n < N; n++) {
   formatter.feature({
     comments: [
       {value: "# A comment"},
-      {value: "# Another comment"},
+      {value: "# Another comment"}
     ],
     keyword:'Feature',
     name:'Generating html report',
-    description: 'It could be useful to have an html report to facilitate documentation reading.',
+    description: 'It could be useful to have an html report to facilitate documentation reading.\n\nEspecially when the whitespace formatting is preserved',
     line:2
   });
 
@@ -46,6 +46,7 @@ for(var n = 0; n < N; n++) {
   formatter.result({status:'undefined', duration: 0});
   formatter.embedding('text/plain', 'Look at this video');
   formatter.embedding('video/mp4', 'http://www.808.dk/pics/video/gizmo.mp4');
+  formatter.embedding('text/plain', 'Look at this multi-line embedding\nReal fancy');
   formatter.write('What a nice helicopter');
   formatter.match({uri:'report.feature'});
   formatter.result({status:'skipped', duration: 0});
@@ -53,7 +54,7 @@ for(var n = 0; n < N; n++) {
 
   formatter.scenarioOutline({keyword:'Scenario Outline', name: 'Scenario with examples', description:'It should be good to format outlined arguments.', line: 16});
   formatter.step({keyword:'Given ', name:'I have a <name> which costs <price>', line: 17});
-  formatter.examples({description:'', name:'Some good examples', keyword:'Examples', line: 18, rows:[{cells:['name', 'price'], line:19}, {cells:['milk', '9'], line:20}, {cells:['bread', '7'], line:21}, {cells:['soap', '5'], line:22}]})
+  formatter.examples({description:'', name:'Some good examples', keyword:'Examples', line: 18, rows:[{cells:['name', 'price'], line:19}, {cells:['milk', '9'], line:20}, {cells:['bread', '7'], line:21}, {cells:['soap', '5'], line:22}]});
   formatter.before({status: 'passed', duration: 668816288});
   formatter.match({uri:'report.feature'});
   formatter.result({status:'passed', duration: 0});
