@@ -33,7 +33,10 @@ for(var n = 0; n < N; n++) {
 
   formatter.before({status: 'passed', duration: 668816288});
   formatter.scenario({"tags":[{"name":"@foo","line":3},{"name":"@bar","line":4},{"name":"@doh","line":5}], keyword:'Scenario', name: 'Creating a simple report', line: 6});
-  formatter.step({keyword:'Given ', name:'I have a feature', line: 7, doc_string:{value: "A\ndoc string\non several lines", content_type:"text/plain", line:8}});
+  formatter.step({comments: [
+    {value: "# Step comment 1"},
+    {value: "# Step comment 2"}
+  ],keyword:'Given ', name:'I have a feature', line: 7, doc_string:{value: "A\ndoc string\non several lines", content_type:"text/plain", line:8}});
   formatter.step({keyword:'When ', name:'I format it', line: 11});
   formatter.step({keyword:'Then ', name:'It should look pretty', line: 12});
   formatter.step({keyword:'And ', name:'It should show tables', line: 13, rows: [{cells:['name', 'price'], line: 14}, {cells:['milk', '9'], line: 15}]});
