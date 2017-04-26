@@ -3,11 +3,11 @@
     <parent>
         <groupId>org.sonatype.oss</groupId>
         <artifactId>oss-parent</artifactId>
-        <version>6</version>
+        <version>7</version>
     </parent>
     <groupId>info.cukes</groupId>
     <artifactId>cucumber-html</artifactId>
-    <version>0.2.5-SNAPSHOT</version>
+    <version>0.2.6-SNAPSHOT</version>
     <name>Cucumber-HTML</name>
     <description>Cucumber-HTML is a cross-platform HTML formatter for all the Cucumber implementations.</description>
 
@@ -22,8 +22,7 @@
         <connection>scm:git:git://github.com/cucumber/cucumber-html.git</connection>
         <developerConnection>scm:git:git@github.com:cucumber/cucumber-html.git</developerConnection>
         <url>git://github.com/cucumber/cucumber-html.git</url>
-      <tag>HEAD</tag>
-  </scm>
+    </scm>
 
     <build>
         <plugins>
@@ -55,7 +54,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-release-plugin</artifactId>
-                        <version>2.3.2</version>
+                        <version>2.5.3</version>
                         <configuration>
                             <tagNameFormat>v@{project.version}</tagNameFormat>
                         </configuration>
