@@ -1,4 +1,4 @@
-[![build status](https://secure.travis-ci.org/cucumber/cucumber-html.png)](http://travis-ci.org/cucumber/cucumber-html)
+[![build status](https://secure.travis-ci.org/cucumber/cucumber-html.svg)](http://travis-ci.org/cucumber/cucumber-html)
 Cucumber-HTML is a cross-platform HTML formatter for all the Cucumber implementations. It's currently only used by Cucumber-JVM and Cucumber.js, but may be used by other implementations later.
 
 ## Prerequisites
@@ -7,7 +7,7 @@ The formatter generates HTML that conforms to the HTML5 specification, so you ne
 
 ## Generating PDF
 
-This formatter replaces Cucumber's old PDF formatter. You can easily turn a HTML report into a PDF with the excellent [wkhtmltopdf](http://code.google.com/p/wkhtmltopdf/):
+This formatter replaces Cucumber's old PDF formatter. You can easily turn a HTML report into a PDF with the excellent [wkhtmltopdf](https://wkhtmltopdf.org/):
 
     wkhtmltopdf cucumber-report.html cucumber-report.pdf
 
