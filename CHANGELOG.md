@@ -16,7 +16,7 @@ Please visit [cucumber/CONTRIBUTING.md](https://github.com/cucumber/cucumber/blo
 
 ### Added
 
-* Added this CHANGELOG.md file per [cucumber/cucumber #251](https://github.com/cucumber/cucumber/issues/251)
+* Added this CHANGELOG.md file per [cucumber/cucumber #251](https://github.com/cucumber/cucumber/issues/251) ([#45](https://github.com/cucumber/cucumber-html/pull/45) [jaysonesmith](https://github.com/jaysonesmith))
 
 ### Changed
 
