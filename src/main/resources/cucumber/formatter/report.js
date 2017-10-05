@@ -28,6 +28,7 @@ for(var n = 0; n < N; n++) {
   formatter.step({keyword:'And ', name:'I set some context', line: 5});
   formatter.match({uri:'report.feature'});
   formatter.result({status:'passed', duration: 0});
+  formatter.afterStep({status: 'failed', duration: 668816288, error_message: 'There are errors in your javascript console output'});
   formatter.match({uri:'report.feature'});
   formatter.result({status:'passed', duration: 0});
 

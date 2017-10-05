@@ -91,6 +91,10 @@
   background-color: #EDBBBB;
 }
 
+.cucumber-report .afterStep {
+  background-color: #FFF;
+}
+
 #cucumber-templates {
   display: none;
 }
