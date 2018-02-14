@@ -128,6 +128,14 @@ CucumberHTML.DOMFormatter = function(rootNode) {
     }
   };
 
+  this.afterstep = function(afterStep) {
+      if(afterStep.status != 'passed') {
+        currentElement = featureElement({keyword: 'AfterStep', name: '', description: ''}, 'afterStep');
+        currentStepIndex++;
+        populateStepError($('details', currentElement), afterStep.error_message);
+      }
+    };
+
   function featureElement(statement, itemtype) {
     var e = blockElement(currentFeature.children('details'), statement, itemtype);
 

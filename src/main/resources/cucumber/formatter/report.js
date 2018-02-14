@@ -40,6 +40,7 @@ for(var n = 0; n < N; n++) {
   formatter.step({keyword:'When ', name:'I format it', line: 11});
   formatter.step({keyword:'Then ', name:'It should look pretty', line: 12});
   formatter.step({keyword:'And ', name:'It should show tables', line: 13, rows: [{cells:['name', 'price'], line: 14}, {cells:['milk', '9'], line: 15}]});
+  formatter.afterstep({status: 'passed', duration: 668816288});
   formatter.match({uri:'report.feature'});
   formatter.result({status:'passed', duration: 0});
   formatter.match({uri:'report.feature'});
