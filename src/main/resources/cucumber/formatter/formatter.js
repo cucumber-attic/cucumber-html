@@ -72,7 +72,7 @@ CucumberHTML.DOMFormatter = function(rootNode) {
   };
 
   this.match = function(match) {
-    currentStep = currentSteps.find('li:nth-child(' + currentStepIndex + ')');
+    currentStep = currentSteps.find('li:nth-of-type(' + currentStepIndex + ')');
     currentStepIndex++;
   };
 
@@ -82,7 +82,7 @@ CucumberHTML.DOMFormatter = function(rootNode) {
       populateStepError(currentStep, result.error_message);
     }
     currentElement.addClass(result.status);
-    var isLastStep = currentSteps.find('li:nth-child(' + currentStepIndex + ')').length == 0;
+    var isLastStep = currentSteps.find('li:nth-of-type(' + currentStepIndex + ')').length == 0;
     if (isLastStep) {
       if (currentSteps.find('.failed').length == 0) {
         // No failed steps. Collapse it.
@@ -112,6 +112,20 @@ CucumberHTML.DOMFormatter = function(rootNode) {
     currentStep.append('<pre class="embedded-text">' + text + '</pre>');
   };
 
+  this.beforestep = function(beforeStep) {
+    currentStep = $('.beforestep', $templates).clone();
+    currentStep.appendTo(currentSteps);
+    populate(currentStep, '', 'beforestep');
+    currentStepIndex++;
+  };
+
+  this.afterstep = function(afterStep) {
+    currentStep = $('.afterstep', $templates).clone();
+    currentStep.appendTo(currentSteps);
+    populate(currentStep, '', 'afterstep');
+    currentStepIndex++;
+  };
+
   this.before = function(before) {
     if(before.status != 'passed') {
       currentElement = featureElement({keyword: 'Before', name: '', description: ''}, 'before');
@@ -128,6 +142,15 @@ CucumberHTML.DOMFormatter = function(rootNode) {
     }
   };
 
+
+  this.stepHookResult = function(result) {
+    currentStep.addClass(result.status);
+    if (result.status == 'failed') {
+      populateStepError(currentStep, result.error_message);
+    }
+  };
+
+
   function featureElement(statement, itemtype) {
     var e = blockElement(currentFeature.children('details'), statement, itemtype);
 
@@ -139,7 +162,10 @@ CucumberHTML.DOMFormatter = function(rootNode) {
 
   function blockElement(parent, statement, itemtype) {
     var e = $('.blockelement', $templates).clone();
-    e.appendTo(parent);
+    if(parent) {
+        e.appendTo(parent);
+    }
+
     return populate(e, statement, itemtype);
   }
 
@@ -195,7 +221,9 @@ CucumberHTML.templates = '<div>\
   <ol class="steps"></ol>\
 \
   <ol>\
+    <li class="beforestep"><div class="header"></div></li>\
     <li class="step"><div class="header"></div><span class="keyword" itemprop="keyword">Keyword</span><span class="name" itemprop="name">Name</span></li>\
+    <li class="afterstep"><div class="header"></div></li>\
   </ol>\
 \
   <pre class="doc_string"></pre>\
