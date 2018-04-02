@@ -94,6 +94,9 @@ CucumberHTML.DOMFormatter = function(rootNode) {
   };
 
   this.embedding = function(mimeType, data) {
+    if (currentStepIndex == 1) {
+      this.dummyStep();
+    }
     if (mimeType.match(/^image\//))
     {
       currentStep.append('<img src="' + data + '">');
@@ -109,6 +112,9 @@ CucumberHTML.DOMFormatter = function(rootNode) {
   };
 
   this.write = function(text) {
+    if (currentStepIndex == 1) {
+      this.dummyStep();
+    }
     currentStep.append('<pre class="embedded-text">' + text + '</pre>');
   };
 
@@ -126,6 +132,14 @@ CucumberHTML.DOMFormatter = function(rootNode) {
       currentStepIndex++;
       populateStepError($('details', currentElement), after.error_message);
     }
+  };
+
+  this.dummyStep = function() {
+    var stepElement = $('.step', $templates).clone();
+    stepElement.appendTo(currentSteps);
+    populate(stepElement, {keyword: '', name: ''}, 'step');
+    currentStep = currentSteps.find('li:nth-child(' + currentStepIndex + ')');
+    currentStepIndex++;
   };
 
   function featureElement(statement, itemtype) {

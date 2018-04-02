@@ -22,10 +22,13 @@ Please visit [cucumber/CONTRIBUTING.md](https://github.com/cucumber/cucumber/blo
 
 ### Fixed
 
+* Correct that handling of embeddings and output from before hooks ([#49](https://github.com/cucumber/cucumber-html/issues/49) [brasmusson])
+
 <!-- Releases -->
 
 <!-- Contributors -->
 [aslakhellesoy]:    https://github.com/aslakhellesoy
+[brasmusson]:       https://github.com/brasmusson
 [cedric-lamalle]:   https://github.com/cedric-lamalle
 [jbpros]:           https://github.com/jbpros
 [jaysonesmith]:     https://github.com/jaysonesmith

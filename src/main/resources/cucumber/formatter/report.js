@@ -24,6 +24,8 @@ for(var n = 0; n < N; n++) {
     line:3,
     description: 'These steps will be executed before each scenario.'
   });
+  formatter.write('Output from before hook');
+  formatter.embedding('text/plain', 'Text embedding from before hook');
   formatter.step({keyword:'Given ', name:'I have a background', line:4});
   formatter.step({keyword:'And ', name:'I set some context', line: 5});
   formatter.match({uri:'report.feature'});
