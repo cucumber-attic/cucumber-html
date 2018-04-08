@@ -23,6 +23,7 @@ Please visit [cucumber/CONTRIBUTING.md](https://github.com/cucumber/cucumber/blo
 
 ### Fixed
 
+* Preserve whitespaces in descriptions. Add missing ":" in the CCS file. ([#42](https://github.com/cucumber/cucumber-html/pull/42) [#29](https://github.com/cucumber/cucumber-html/issues/29) [#35](https://github.com/cucumber/cucumber-html/pull/35), [mpkorstanje])
 * Correct that handling of embeddings and output from before hooks ([#49](https://github.com/cucumber/cucumber-html/issues/49) [brasmusson])
 
 <!-- Releases -->
@@ -35,6 +36,7 @@ Please visit [cucumber/CONTRIBUTING.md](https://github.com/cucumber/cucumber/blo
 [jaysonesmith]:     https://github.com/jaysonesmith
 [klausbayrhammer]:  https://github.com/klausbayrhammer
 [mijikim]:          https://github.com/mijikim
+[mpkorstanje]:      https://github.com/mpkorstanje
 [olleolleolle]:     https://github.com/olleolleolle
 [paoloambrosio]:    https://github.com/paoloambrosio
 [renier]:           https://github.com/renier
