@@ -68,6 +68,25 @@ for(var n = 0; n < N; n++) {
   formatter.match({uri:'report.feature'});
   formatter.result({status:'failed', error_message:'I didn\'t do it.', duration: 0});
   formatter.after({status: 'failed', duration: 668816288, "error_message": 'com.example.MyDodgyException: Widget underflow\r\n\tat org.codehaus.groovy.runtime.metaclass.ClosureMetaClass.invokeMethod(ClosureMetaClass.java:264)\r\n\tat com.example.WidgetFurbicator.furbicateWidgets(WidgetFurbicator.java:678)'});
+
+  formatter.scenario({"tags":[{"name":"@stephooks","line":24}], keyword:'Scenario', name: 'Scenario with step hooks', line: 25});
+  formatter.before({status: 'passed', duration: 668816288});
+  formatter.beforestep({status: 'passed', duration: 668816288});
+  formatter.step({keyword:'Given ', name:'step 1', line: 26});
+  formatter.match({uri:'report.feature'});
+  formatter.result({status:'passed', duration: 0});
+  formatter.afterstep({status: 'passed', duration: 668816288});
+  formatter.beforestep({status: 'failed', duration: 668816288, "error_message": 'com.example.MyDodgyException: Widget underflow\r\n\tat org.codehaus.groovy.runtime.metaclass.ClosureMetaClass.invokeMethod(ClosureMetaClass.java:264)\r\n\tat com.example.StepDefinitions.beforeStepHook()'});
+  formatter.step({keyword:'When ', name:'step 2', line: 27});
+  formatter.match({uri:'report.feature'});
+  formatter.result({status:'skipped', duration: 0});
+  formatter.afterstep({status: 'failed', duration: 668816288, "error_message": 'com.example.MyDodgyException: Widget underflow\r\n\tat org.codehaus.groovy.runtime.metaclass.ClosureMetaClass.invokeMethod(ClosureMetaClass.java:264)\r\n\tat com.example.StepDefinitions.afterStepHook()'});
+  formatter.beforestep({status: 'skipped', duration: 0});
+  formatter.step({keyword:'Then ', name:'step 3', line: 28});
+  formatter.match({uri:'report.feature'});
+  formatter.result({status:'skipped', duration: 0});
+  formatter.afterstep({status: 'skipped', duration: 0});
+  formatter.after({status: 'passed', duration: 668816288});
 }
 console.log('Rendered %s features in %s ms', N, new Date().getTime() - start);
 
