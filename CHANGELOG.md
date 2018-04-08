@@ -23,6 +23,7 @@ Please visit [cucumber/CONTRIBUTING.md](https://github.com/cucumber/cucumber/blo
 
 ### Fixed
 
+* Display all step result error messages, regardless of the result status ([brasmusson])
 * Preserve whitespaces in descriptions. Add missing ":" in the CCS file. ([#42](https://github.com/cucumber/cucumber-html/pull/42) [#29](https://github.com/cucumber/cucumber-html/issues/29) [#35](https://github.com/cucumber/cucumber-html/pull/35), [mpkorstanje])
 * Correct that handling of embeddings and output from before hooks ([#49](https://github.com/cucumber/cucumber-html/issues/49) [brasmusson])
 

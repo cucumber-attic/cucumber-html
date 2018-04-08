@@ -78,7 +78,7 @@ CucumberHTML.DOMFormatter = function(rootNode) {
 
   this.result = function(result) {
     currentStep.addClass(result.status);
-    if (result.status == 'failed') {
+    if (result.error_message != '') {
       populateStepError(currentStep, result.error_message);
     }
     currentElement.addClass(result.status);
