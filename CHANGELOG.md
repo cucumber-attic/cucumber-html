@@ -16,6 +16,7 @@ Please visit [cucumber/CONTRIBUTING.md](https://github.com/cucumber/cucumber/blo
 
 ### Added
 
+* Handle before step and after step hooks ([#50](https://github.com/cucumber/cucumber-html/pull/50) [brasmusson])
 * Add OSGI metadata tor the built jar file ([#40](https://github.com/cucumber/cucumber-html/issues/40) [brasmusson])
 * Added this CHANGELOG.md file per [cucumber/cucumber #251](https://github.com/cucumber/cucumber/issues/251) ([#45](https://github.com/cucumber/cucumber-html/pull/45) [jaysonesmith](https://github.com/jaysonesmith))
 

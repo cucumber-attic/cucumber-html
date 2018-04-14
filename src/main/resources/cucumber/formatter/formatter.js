@@ -119,18 +119,27 @@ CucumberHTML.DOMFormatter = function(rootNode) {
   };
 
   this.before = function(before) {
-    if(before.status != 'passed') {
-      currentElement = featureElement({keyword: 'Before', name: '', description: ''}, 'before');
-      currentStepIndex = 1;
-      populateStepError($('details', currentElement), before.error_message);
-    }
+    this.handleHookResult(before);
   };
 
   this.after = function(after) {
-    if(after.status != 'passed') {
-      currentElement = featureElement({keyword: 'After', name: '', description: ''}, 'after');
-      currentStepIndex++;
-      populateStepError($('details', currentElement), after.error_message);
+    this.handleHookResult(after);
+  };
+
+  this.beforestep = function(beforestep) {
+    this.handleHookResult(beforestep);
+  };
+
+  this.afterstep = function(afterstep) {
+    this.handleHookResult(afterstep);
+  };
+
+  this.handleHookResult = function(hook) {
+      if (hook.status != 'passed' && hook.error_message != '') {
+      this.dummyStep();
+      currentStep.addClass(hook.status);
+      currentElement.addClass(hook.status);
+      populateStepError(currentStep, hook.error_message);
     }
   };
 
