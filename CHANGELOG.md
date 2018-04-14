@@ -22,6 +22,8 @@ Please visit [cucumber/CONTRIBUTING.md](https://github.com/cucumber/cucumber/blo
 
 ### Changed
 
+* Change the groupId to io.cucumber ([brasmusson])
+
 ### Fixed
 
 * Display all step result error messages, regardless of the result status ([brasmusson])
