@@ -4,7 +4,7 @@
   "contributors": ["Cédric Lamalle <cedric.lamalle@gmail.com>", "Julien Biezemans <jb@jbpros.com>"],
   "name": "cucumber-html",
   "description": "Cross platform HTML formatter for all implementations of Cucumber",
-  "version": "0.2.4",
+  "version": "0.2.7",
   "homepage": "https://github.com/cucumber/cucumber-html",
   "repository": {
     "type": "git",
