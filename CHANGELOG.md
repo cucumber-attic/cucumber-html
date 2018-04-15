@@ -10,6 +10,16 @@ Please visit [cucumber/CONTRIBUTING.md](https://github.com/cucumber/cucumber/blo
 
 ----
 
+## [Unreleased](https://github.com/cucumber/cucumber-html/compare/v0.2.7...master) (In Git)
+
+### Added
+
+### Changed
+
+### Fixed
+
+### Removed
+
 ## [0.2.7](https://github.com/cucumber/cucumber-html/compare/v0.2.6...v0.2.7) (2018-04-15)
 
 ### Added
