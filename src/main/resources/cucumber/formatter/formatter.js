@@ -34,6 +34,10 @@ CucumberHTML.DOMFormatter = function(rootNode) {
   };
 
   this.step = function(step) {
+    if (step.arguments) {
+      highlightArguments(step);
+    }
+
     var stepElement = $('.step', $templates).clone();
     stepElement.appendTo(currentSteps);
     populate(stepElement, step, 'step');
@@ -56,6 +60,15 @@ CucumberHTML.DOMFormatter = function(rootNode) {
       });
     }
   };
+
+  function highlightArguments(step) {
+    var textArray = step.name.split('');
+    $.each(step.arguments, function(index, arg) {
+      textArray[arg.start] = '<span class="argument">' + textArray[arg.start];
+      textArray[arg.end] = '</span>' + (textArray[arg.end] ? textArray[arg.end] : '');
+    });
+    step.name = textArray.join('');
+  }
 
   this.examples = function(examples) {
     var examplesElement = blockElement(currentElement.children('details'), examples, 'examples');
@@ -170,7 +183,7 @@ CucumberHTML.DOMFormatter = function(rootNode) {
     populateTags(e, statement.tags);
     populateComments(e, statement.comments);
     e.find('.keyword').text(statement.keyword);
-    e.find('.name').text(statement.name);
+    e.find('.name').html(statement.name);
     e.find('.description').text(statement.description);
     e.attr('itemtype', 'http://cukes.info/microformat/' + itemtype);
     e.addClass(itemtype);
