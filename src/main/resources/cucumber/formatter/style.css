@@ -6,6 +6,10 @@
   font-weight: bold;
 }
 
+.cucumber-report .argument {
+  font-weight: bold;
+}
+
 .cucumber-report .description {
   font-style: italic;
   margin-left: 20px;
