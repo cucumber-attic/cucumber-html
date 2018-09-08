@@ -34,9 +34,7 @@ CucumberHTML.DOMFormatter = function(rootNode) {
   };
 
   this.step = function(step) {
-    if (step.arguments) {
-      highlightArguments(step);
-    }
+    highlightArguments(step);
 
     var stepElement = $('.step', $templates).clone();
     stepElement.appendTo(currentSteps);
@@ -63,10 +61,19 @@ CucumberHTML.DOMFormatter = function(rootNode) {
 
   function highlightArguments(step) {
     var textArray = step.name.split('');
-    $.each(step.arguments, function(index, arg) {
-      textArray[arg.start] = '<span class="argument">' + textArray[arg.start];
-      textArray[arg.end] = '</span>' + (textArray[arg.end] ? textArray[arg.end] : '');
+    textArray = $.map(textArray, function (char) {
+      if (char === '<') return '&lt;';
+      if (char === '>') return '&gt;';
+      if (char === '&') return '&amp;';
+      return char;
     });
+
+    if (step.arguments) {
+      $.each(step.arguments, function(index, arg) {
+        textArray[arg.start] = '<span class="argument">' + textArray[arg.start];
+        textArray[arg.end] = '</span>' + (textArray[arg.end] ? textArray[arg.end] : '');
+      });
+    }
     step.name = textArray.join('');
   }
 
