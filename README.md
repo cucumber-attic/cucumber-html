@@ -2,6 +2,8 @@
 
 Cucumber-HTML is a cross-platform HTML formatter for all the Cucumber implementations. It's currently only used by Cucumber-JVM ~and Cucumber.js, but may be used by other implementations later~.
 
+
+> **Update Juli 2018**: `cucumber-html` has been inlined into `cucumber-jvm`. 
 > **Update August 2017**: Cucumber.js does not use this project.
 >
 > The current thinking is to replace formatters like the HTML formatter and Pretty formatter with event-based, all-platform compatible utilities in the spirit of [cucumber-pretty-formatter](https://github.com/cucumber/cucumber-pretty-formatter) (a work-in-progress).
